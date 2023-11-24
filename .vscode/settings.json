@@ -1,0 +1,29 @@
+{
+    "java.project.sourcePaths": [
+        "embaapo\\WEB-INF\\src"
+    ],
+    "java.project.outputPath": "embaapo\\WEB-INF\\classes",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "embaapo\\WEB-INF\\lib\\atlantic.jar",
+        "embaapo\\WEB-INF\\lib\\javacsv.jar",
+        "embaapo\\WEB-INF\\lib\\mail.jar",
+        "embaapo\\WEB-INF\\lib\\sapphire.jar",
+        "embaapo\\WEB-INF\\lib\\silvertail.jar",
+        "embaapo\\WEB-INF\\lib\\slf4j-api.jar",
+        "embaapo\\WEB-INF\\lib\\slf4j-jdk14.jar",
+        "embaapo\\WEB-INF\\lib\\zcommon.jar",
+        "embaapo\\WEB-INF\\lib\\zcommons-el.jar",
+        "embaapo\\WEB-INF\\lib\\zel.jar",
+        "embaapo\\WEB-INF\\lib\\zhtml.jar",
+        "embaapo\\WEB-INF\\lib\\zk.jar",
+        "embaapo\\WEB-INF\\lib\\zkbind.jar",
+        "embaapo\\WEB-INF\\lib\\zkex.jar",
+        "embaapo\\WEB-INF\\lib\\zkmax.jar",
+        "embaapo\\WEB-INF\\lib\\zkplus.jar",
+        "embaapo\\WEB-INF\\lib\\zml.jar",
+        "embaapo\\WEB-INF\\lib\\zul.jar",
+        "embaapo\\WEB-INF\\lib\\zuljsp.jar",
+        "embaapo\\WEB-INF\\lib\\zweb.jar"
+    ]
+}
