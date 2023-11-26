@@ -1,0 +1,10 @@
+<window id="inicioWindow" title="Página de Inicio" border="normal"
+    viewModel="@id('vm') @init('viewmodel.InicioViewModel')">
+
+    <vbox align="center" spacing="10px">
+        <button label="Login" onClick="@command('login')" />
+        <button label="Sign In" onClick="@command('sing_in')" />
+        <button label="Olvide mi contraseña" onClick="@command('olvide_mi_contrasena')" />
+    </vbox>
+
+</window>

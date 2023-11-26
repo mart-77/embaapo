@@ -1,0 +1,14 @@
+<window id="olvideContrasenaWindow" title="Olvidé mi Contraseña" border="normal"
+    viewModel="@id('vm') @init('viewmodel.OlvideContrasenaViewModel')">
+
+    <vbox align="center" spacing="10px">
+        <label value="Email:" />
+        <textbox value="@bind(vm.email)" />
+
+        <label value="Nueva Contraseña:" />
+        <textbox type="password" value="@bind(vm.nuevaContrasena)" />
+
+        <button label="Restablecer Contraseña" onClick="@command('restablecerContrasena')" />
+    </vbox>
+
+</window>

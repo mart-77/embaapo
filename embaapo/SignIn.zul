@@ -1,0 +1,23 @@
+<window id="registroWindow" title="Registro de Usuario" border="normal"
+    viewModel="@id('vm') @init('viewmodel.RegistroViewModel')">
+
+    <vbox align="center" spacing="10px">
+        <label value="Nombre:" />
+        <textbox value="@bind(vm.nombre)" />
+
+        <label value="Apellido:" />
+        <textbox value="@bind(vm.apellido)" />
+
+        <label value="Email:" />
+        <textbox value="@bind(vm.email)" />
+
+        <label value="Teléfono:" />
+        <textbox value="@bind(vm.telefono)" />
+
+        <label value="Contraseña:" />
+        <textbox type="password" value="@bind(vm.password)" />
+
+        <button label="Registrar" onClick="@command('registrar')" />
+    </vbox>
+
+</window>

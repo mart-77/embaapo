@@ -2,7 +2,7 @@ package prueba;
 
 public class Test {
     
-    String valor = "Carlitos";
+    String valor = "Prueba";
 public static void main (String[] args) {
     
 }
