@@ -2,9 +2,9 @@
     viewModel="@id('vm') @init('viewmodel.InicioViewModel')">
 
     <vbox align="center" spacing="10px">
-        <button label="Login" onClick="@command('login')" />
-        <button label="Sign In" onClick="@command('sing_in')" />
-        <button label="Olvide mi contraseña" onClick="@command('olvide_mi_contrasena')" />
+        <button label="Login" href="Login.zul"/>
+        <button label="Sign In" href="SignIn.zul"/>
+        <button label="Olvide mi contraseña" href = "OlvideContrasena.zul" />
     </vbox>
 
 </window>

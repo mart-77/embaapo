@@ -3,7 +3,7 @@ package viewmodel;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.zk.ui.Executions;
 
-public class LogoutViewModel {
+public class LogOutViewModel {
 
     @Command
     public void logout() {
