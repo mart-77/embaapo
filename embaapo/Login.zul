@@ -1,6 +1,6 @@
 <window id="loginWindow" title="Login" border="normal" apply="org.zkoss.bind.BindComposer"
     viewModel="@id('vm') @init('viewmodel.LoginViewModel')">
-    <grid>
+    <vbox align="center" spacing="10px">
         <rows>
             <row>
                 <label value="Usuario:" />
@@ -17,5 +17,5 @@
                 <label id="errorMessage" value="@bind(vm.errorMessage)" style="color: red;" />
             </row>
         </rows>
-    </grid>
+    </vbox>
 </window>

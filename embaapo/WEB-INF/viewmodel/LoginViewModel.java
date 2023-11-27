@@ -1,4 +1,4 @@
-package tu.paquete;
+package viewmodel;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
@@ -14,11 +14,7 @@ public class LoginViewModel {
     private String username;
     private String password;
 
-    @Init
-    public void init() {
-    }
-
-
+    
     @Command
     public void login() {
         if (validarCredenciales()) {
