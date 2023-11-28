@@ -11,7 +11,7 @@
                 <textbox type="password" value="@bind(vm.password)" />
             </row>
             <row>
-                <button label="Iniciar Sesión" onClick="@command('doLogin')" />
+                <button label="Iniciar Sesión" onClick="@command('login')" />
             </row>
             <row>
                 <label id="errorMessage" value="@bind(vm.errorMessage)" style="color: red;" />

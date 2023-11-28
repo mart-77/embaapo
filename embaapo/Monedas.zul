@@ -1,0 +1,11 @@
+<window viewModel="@id('vm') @init('viewmodel.MonedasViewModel')" title="Formulario de Monedas" border="normal">
+    <vbox>
+        <label value="Nombre de la Moneda:" />
+        <textbox value="@bind(vm.nombre)" />
+
+        <label value="Símbolo de la Moneda:" />
+        <textbox value="@bind(vm.simbolo)" />
+
+        <button label="Guardar" onClick="@command('guardarMoneda')" />
+    </vbox>
+</window>

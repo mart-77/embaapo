@@ -1,6 +1,7 @@
 package viewmodel;
 
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
 
 import java.sql.Connection;
@@ -16,7 +17,8 @@ public class LoginViewModel {
     private String errorMessage ;
 
     
-    @Command("doLogin")
+    @Command
+    @NotifyChange({"errorMessage"})
     public void login() {
         if (validarCredenciales()) {
            
@@ -49,10 +51,6 @@ public class LoginViewModel {
             return false;
         }
     }
-    
-
-
-
     //Getters y Setters
      public String getEmail() {
         return email;
