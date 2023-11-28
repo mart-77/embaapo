@@ -2,7 +2,7 @@
     viewModel="@id('vm') @init('viewmodel.MenuViewModel')">
 
     <vbox align="center" spacing="10px">
-        <button label="Log Out" onClick="@command('logout')"/>
+        <button label="Log Out" href="Inicio.zul"/>
         <button label="Dar Roles" href="DarRoles.zul"/>
         <button label="Monedas" href = "Monedas.zul" />
         <button label="Calificar" href = "Calificar.zul" />

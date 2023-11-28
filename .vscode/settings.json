@@ -1,6 +1,7 @@
 {
     "java.project.sourcePaths": [
-        "embaapo\\WEB-INF\\src"
+        "embaapo/WEB-INF/src",
+        "embaapo/WEB-INF/lib"
     ],
     "java.project.outputPath": "embaapo\\WEB-INF\\classes",
     "java.project.referencedLibraries": [
@@ -26,5 +27,17 @@
         "embaapo\\WEB-INF\\lib\\zuljsp.jar",
         "embaapo\\WEB-INF\\lib\\zweb.jar",
         "c:\\Users\\USER\\Downloads\\postgresql-42.7.0.jar"
+    ],
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "tp",
+            "database": "tp",
+            "username": "postgres"
+        }
     ]
 }

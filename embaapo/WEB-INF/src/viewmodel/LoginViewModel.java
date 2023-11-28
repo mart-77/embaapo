@@ -3,7 +3,7 @@ package viewmodel;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
-
+import viewmodel.conexion;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,14 +11,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginViewModel {
+    
 
     private String email;
     private String password;
     private String errorMessage ;
-
     
     @Command
     @NotifyChange({"errorMessage"})
+    
     public void login() {
         if (validarCredenciales()) {
            
@@ -32,6 +33,8 @@ public class LoginViewModel {
 
     private boolean validarCredenciales() {
         System.out.println("Entro");
+
+
         try {
             Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
 
@@ -40,6 +43,8 @@ public class LoginViewModel {
             try (PreparedStatement preparedStatement = connection.prepareStatement(consulta)) {
                 preparedStatement.setString(1, email);
                 preparedStatement.setString(2, password);
+                System.out.println(email+password);
+
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     return resultSet.next();
