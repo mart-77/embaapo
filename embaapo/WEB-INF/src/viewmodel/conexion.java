@@ -4,9 +4,19 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Scanner;
 
-public class conexion {
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.select.SelectorComposer;
+import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Textbox;
 
+public class conexion extends SelectorComposer<Component> {
+    @Wire
+    private static Textbox emailTextbox;
+    @Wire
+    private static Textbox passwordTextbox;
     private String url;
     private String usuario;
     private String contrasenia;
@@ -52,52 +62,71 @@ public conexion() {
      * @param consultaSql
      * @return
      */
-    public boolean existeAlgunRegistro(String consultaSql) {
-        // Variable para saber la cantidad de registros
-        int cantidadRegistros = 0;
-
+  
+    static boolean validarCredenciales() {
+        String email = (emailTextbox != null) ? emailTextbox.getValue() : null;
+        String password = (passwordTextbox != null) ? passwordTextbox.getValue() : null;
+        System.out.println("Entro");
         try {
-            // Se crea el Statement para ejecutar la consulta
-            try (PreparedStatement statement = conexion.prepareStatement(consultaSql)) {
-                // Se ejecuta la consulta y se guarda el resultado en un ResultSet
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    // Se recorren todos los registros
-                    while (resultSet.next() && cantidadRegistros < 1) {
-                        // Aumenta en 1 la cantidad de registros
-                        cantidadRegistros++;
-                    }
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
+            // Consulta para verificar las credenciales
+            String consulta = "SELECT * FROM usuario WHERE email = ? AND password = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(consulta)) {
+                preparedStatement.setString(1, email);
+                preparedStatement.setString(2, password);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    return resultSet.next();
                 }
+                
             }
-        } catch (SQLException e) { // En el caso de que haya una excepción, lo toma
-            e.printStackTrace(); // Muestra el mensaje de error
+        } catch (SQLException e) {
+            // Manejo de excepciones (registra o maneja según sea necesario)
+            e.printStackTrace();
+            return false;
         }
 
-        // Se verifica cuánto vale cantidadRegistros
-        return cantidadRegistros > 0;
     }
+
+
+    public static void main(String[] args) {
+        // Solicitar datos al usuario
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Ingrese su email: ");
+        String email = scanner.nextLine();
+        System.out.println("Ingrese su contraseña: ");
+        String password = scanner.nextLine();
+
+        // Ejecutar la autenticación
+        if (validarCredenciales()) {
+            System.out.println("¡Inicio de sesión exitoso!");
+        } else {
+            System.out.println("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
+        }
+    }
+}
+
+
+
+    /* 
     public static void main(String[] arg){
         conexion cone= new conexion();
         cone.crearConexion();
+
         try {
             //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
 
             // Consulta para verificar las credenciales
             String consulta = "SELECT * FROM usuario WHERE email = ? AND password = ?";
             try (PreparedStatement preparedStatement = cone.getConexion().prepareStatement(consulta)) {
-                
-                preparedStatement.setString(1,"admin@example.com" );
+                preparedStatement.setString(1,"" );
                 preparedStatement.setString(2, "000");
-
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if(resultSet.next()){
-                                    System.out.println("Se encontro");
-
+                     System.out.println("Se encontro");
                     }else {
-                                    System.out.println("No se encontro");
-
+                    System.out.println("No se encontro");
                     }
                     //return resultSet.next();
-
                 }
                 System.out.println("Entro");
             }
@@ -106,10 +135,7 @@ public conexion() {
             e.printStackTrace();
         }
          System.out.println("Termino");
-    }
-
-
-
-}
+    }/* /* */
+//}
 
 

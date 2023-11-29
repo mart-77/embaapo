@@ -19,7 +19,7 @@ public class RegistroViewModel {
 
     @Command
     public void registrar() {
-        if (validarDatos()) {
+       // if (validarDatos()) {
             // Si los datos son válidos, registrar en la base de datos
             if (registrarEnBaseDeDatos()) {
                 // Registro exitoso, redirigir a la página de inicio de sesión
@@ -27,7 +27,7 @@ public class RegistroViewModel {
             } else {
                 // Error al registrar en la base de datos, manejar según sea necesario
             }
-        }
+       // }
     }
 
     private boolean validarDatos() {

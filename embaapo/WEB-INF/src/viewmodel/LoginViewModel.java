@@ -21,7 +21,7 @@ public class LoginViewModel {
     @NotifyChange({"errorMessage"})
     
     public void login() {
-        if (validarCredenciales()) {
+        if (conexion.validarCredenciales()) {
            
         // Redirigir a otra pantalla
         Executions.sendRedirect("Menu.zul");
@@ -31,31 +31,7 @@ public class LoginViewModel {
         }
     }
 
-    private boolean validarCredenciales() {
-        System.out.println("Entro");
-
-
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
-
-            // Consulta para verificar las credenciales
-            String consulta = "SELECT * FROM usuario WHERE email = ? AND password = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(consulta)) {
-                preparedStatement.setString(1, email);
-                preparedStatement.setString(2, password);
-                System.out.println(email+password);
-
-
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    return resultSet.next();
-                }
-            }
-        } catch (SQLException e) {
-            // Manejo de excepciones (registra o maneja según sea necesario)
-            e.printStackTrace();
-            return false;
-        }
-    }
+    
     //Getters y Setters
      public String getEmail() {
         return email;

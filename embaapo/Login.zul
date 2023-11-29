@@ -3,19 +3,25 @@
     <grid>
         <rows>
             <row>
-                <label value="Usuario:" />
-                <textbox value="@bind(vm.email)" />
+                <label value="Email:"/>
+            <textbox id="emailTextbox"/>
             </row>
             <row>
-                <label value="Contraseña:" />
-                <textbox type="password" value="@bind(vm.password)" />
+                <label value="Contraseña:"/>
+            <textbox id="passwordTextbox" type="password"/>
             </row>
             <row>
                 <button label="Iniciar Sesión" onClick="@command('login')" />
             </row>
-            <row>
+               <row>
                 <label id="errorMessage" value="@bind(vm.errorMessage)" style="color: red;" />
             </row>
+            
         </rows>
     </grid>
 </window>
+
+            
+            
+        
+     
