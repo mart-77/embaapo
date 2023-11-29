@@ -1,37 +1,36 @@
 package viewmodel;
 
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
-import viewmodel.conexion;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
-public class LoginViewModel {
-    
+public class LoginViewModel{
 
+    private String errorMessage ;
     private String email;
     private String password;
-    private String errorMessage ;
-    
+    private conexion connect;
+
+    @Init
+    public void initLogin() {
+        connect = new conexion();
+        connect.crearConexion();
+    }
+
     @Command
     @NotifyChange({"errorMessage"})
-    
     public void login() {
-        if (conexion.validarCredenciales()) {
-           
-        // Redirigir a otra pantalla
+        System.out.println("Email y Password: " + email + password );
+        if (connect.validarCredenciales(email, password)) {
+
         Executions.sendRedirect("Menu.zul");
-    
+
         } else {
              errorMessage = "Usuario o contraseña incorrectos";
         }
-    }
+            }
 
-    
     //Getters y Setters
      public String getEmail() {
         return email;
@@ -55,7 +54,7 @@ public class LoginViewModel {
         this.errorMessage = errorMessage;
     }
 
-    
 
-   
+
+
 }

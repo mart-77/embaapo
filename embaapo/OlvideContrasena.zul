@@ -1,3 +1,5 @@
+<zk>
+
 <window id="olvideContrasenaWindow" title="Olvidé mi Contraseña" border="normal"
     viewModel="@id('vm') @init('viewmodel.OlvideContrasenaViewModel')">
 
@@ -12,3 +14,4 @@
     </vbox>
 
 </window>
+</zk>

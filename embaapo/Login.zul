@@ -1,14 +1,16 @@
+<zk>
+
 <window id="loginWindow" title="Login" border="normal" apply="org.zkoss.bind.BindComposer"
     viewModel="@id('vm') @init('viewmodel.LoginViewModel')">
     <grid>
         <rows>
             <row>
-                <label value="Email:"/>
-            <textbox id="emailTextbox"/>
+            <label value="Email:"/>
+            <textbox  value="@bind(vm.email)" />
             </row>
             <row>
                 <label value="Contraseña:"/>
-            <textbox id="passwordTextbox" type="password"/>
+                <textbox value="@bind(vm.password)"  type="password"/>
             </row>
             <row>
                 <button label="Iniciar Sesión" onClick="@command('login')" />
@@ -16,12 +18,8 @@
                <row>
                 <label id="errorMessage" value="@bind(vm.errorMessage)" style="color: red;" />
             </row>
-            
+
         </rows>
     </grid>
 </window>
-
-            
-            
-        
-     
+</zk>
