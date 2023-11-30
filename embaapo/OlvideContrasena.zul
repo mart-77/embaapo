@@ -1,6 +1,6 @@
 <zk>
 
-<window id="olvideContrasenaWindow" title="Olvidé mi Contraseña" border="normal"
+<window id="olvideContrasenaWindow" title="Olvidé mi Contraseña" apply="org.zkoss.bind.BindComposer" border="normal"
     viewModel="@id('vm') @init('viewmodel.OlvideContrasenaViewModel')">
 
     <vbox align="center" spacing="10px">
@@ -11,6 +11,9 @@
         <textbox type="password" value="@bind(vm.nuevaContrasena)" />
 
         <button label="Restablecer Contraseña" onClick="@command('restablecerContrasena')" />
+        
+            
+
     </vbox>
 
 </window>

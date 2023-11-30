@@ -8,7 +8,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.zkoss.bind.annotation.Init;
+
 public class CalificacionViewModel {
+    private conexion connect;
+
+    @Init
+    public void initOlvideContrasena() {
+        connect = new conexion();
+        connect.crearConexion();
+    }
 
     // Configuración de conexión a la base de datos (reemplaza con tus propias credenciales y URL)
     private String url = "jdbc:postgresql://localhost:5432/tp";

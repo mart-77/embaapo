@@ -9,17 +9,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class OlvideContrasenaViewModel {
 
-    private String email;
-    private String nuevaContrasena;
+    private static String email;
+    private static String nuevaContrasena;
     private String errorMessage ;
 
 private conexion connect;
 
     @Init
-    public void initLogin() {
+    public void initOlvideContrasena() {
         connect = new conexion();
         connect.crearConexion();
     }
@@ -27,14 +28,14 @@ private conexion connect;
     @NotifyChange({"errorMessage"})
     @Command
     public void restablecerContrasena() {
+                errorMessage = "Boton Presionado";
        // if (validarDatos()) {
             // Si los datos son válidos, restablecer la contraseña en la base de datos
-            if (restablecerContrasenaEnBaseDeDatos()) {
+        if (restablecerContrasenaEnBaseDeDatos()) {
                 // Restablecimiento de contraseña exitoso, redirigir a la página de inicio de sesión
-                Executions.sendRedirect("/inicio.zul");
-            } else {
+                Executions.sendRedirect("/Inicio.zul");
+         } else {
                 errorMessage = "Usuario incorrecto";
-
                 // Error al restablecer la contraseña en la base de datos, manejar según sea necesario
             }
        // }
@@ -45,11 +46,11 @@ private conexion connect;
  //       return true; // Retornar true si los datos son válidos
 //    }
 
-    private boolean restablecerContrasenaEnBaseDeDatos() {
+    private static boolean restablecerContrasenaEnBaseDeDatos() {
         try {
-            Connection connection = connect.getConexion();
-            //DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
-
+            System.out.println("Email: " + email);
+            System.out.println("Password: " + nuevaContrasena);
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
             // Consulta para actualizar la contraseña
             String consulta = "UPDATE usuario SET password = ? WHERE email = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(consulta)) {
@@ -67,6 +68,30 @@ private conexion connect;
             return false;
         }
     }
+    public static void main(String[] args) {
+        OlvideContrasenaViewModel viewModel = new OlvideContrasenaViewModel();
+
+        // Configurar el ViewModel con datos de prueba
+       Scanner scanner = new Scanner(System.in);
+        System.out.println("Ingrese su email: ");
+         email = scanner.next();
+        System.out.println("Ingrese su nueva contraseña: ");
+         nuevaContrasena = scanner.next();
+        // Ejecutar el restablecimiento de contraseña
+        if (restablecerContrasenaEnBaseDeDatos()) {
+            System.out.println("Restablecimiento de contraseña exitoso.");
+        } else {
+            System.out.println("Error al restablecer la contraseña.");
+        }
+    }
+
+
+
+
+
+
+
+
     public String getEmail() {
         return email;
     }

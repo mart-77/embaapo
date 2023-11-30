@@ -24,7 +24,7 @@ public class RegistroViewModel {
     private conexion connect;
 
     @Init
-    public void initLogin() {
+    public void initRegistro() {
         connect = new conexion();
         connect.crearConexion();
     }
