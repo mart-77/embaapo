@@ -6,6 +6,10 @@
         <button label="Dar Roles" href="DarRoles.zul"/>
         <button label="Monedas" href = "Monedas.zul" />
         <button label="Calificar" href = "Calificar.zul" />
+        <button label="Quiero ser seller" href = "RegistrarSeller.zul" />
+        <button label="Seller" href = "Sellers.zul" />
+
+
 
     </vbox>
 

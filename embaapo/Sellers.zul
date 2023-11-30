@@ -1,0 +1,19 @@
+<zk>
+    <window title="Lista de Sellers" border="normal" viewModel="@id('vm') @init('ViewModel.SellerListViewModel')">
+        <grid model="@load(vm.sellers)">
+            <columns>
+                <column label="ID" />
+                <column label="Nombre" />
+                <column label="Eliminar" />
+            </columns>
+            <template name="model" var="seller">
+                <row>
+                    <label value="@load(id)" />
+                    <label value="@load(nombre)" />
+                    <label value="@load(oficio)" />
+                    <button label="Eliminar" onClick="@command('eliminarSeller', id)" />
+                </row>
+            </template>
+        </grid>
+    </window>
+</zk>

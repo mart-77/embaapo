@@ -1,17 +1,18 @@
-<window viewModel="@id('vm') @init('viewmodel.CalificacionViewModel')" title="Formulario de Calificación" border="normal">
-    <vbox>
-        <label value="Nombre del Seller:" />
-        <combobox model="@load(vm.nombresSellers)" selectedItem="@bind(vm.nombreSeleccionado)" />
+<zk>
+    <window apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('viewmodel.CalificacionViewModel')">
+        <vbox>
+            <label value="Nombre del Seller:" />
+            <textbox value= "@bind(vm.nombreSeller)" />
+            
+            <label value="Descripción:" />
+            <textbox rows="3" cols="30" value="@bind(vm.descripcion)" />
+            
+            <label value="Puntuación:" />
+            <intbox value="@bind(vm.puntuacion)" />
 
-        <label value="Descripción:" />
-        <textbox value="@bind(vm.descripcion)" />
-
-        <label value="Puntuación:" />
-        <intbox value="@bind(vm.puntuacion)" />
-
-        <button label="Guardar Calificación" onClick="@command('guardarCalificacion')" />
-        
-        <!-- Espacio para mensajes -->
-        <label value="@load(vm.mensaje)" style="color: red;" />
-    </vbox>
-</window>
+            <button label="Calificar" onClick="@command('calificar')" />
+            
+        </vbox>
+    </window>
+</zk>
