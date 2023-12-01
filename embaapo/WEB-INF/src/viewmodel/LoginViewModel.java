@@ -53,8 +53,4 @@ public class LoginViewModel{
      public void seterrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
-
-
-
-
 }

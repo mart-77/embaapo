@@ -1,0 +1,22 @@
+
+    <window id="DarRolesWindow" title="Otorgar Roles" border="normal"
+            viewModel="@id('vm') @init('viewmodel.DarRolesViewModel')">
+
+         <grid model="@load(vm.usuarios)">
+        <columns>
+            <column label="ID Usuario"/>
+            <column label="Nombre"/>
+            <column label="Email"/>
+            <column label="Rol"/>
+        </columns>
+        <template name="model" var="usuario">
+            <row>
+                <label value="@load(usuario.id_usuario)"/>
+                <label value="@load(usuario.nombre)"/>
+                <label value="@load(usuario.email)"/>
+                <label value="@load(usuario.rol_descripcion)"/>
+            </row>
+        </template>
+    </grid>
+
+    </window>
