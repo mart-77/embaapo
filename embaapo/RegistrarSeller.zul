@@ -19,7 +19,10 @@
         <textbox value="@bind(vm.oficio)" />
 
 
-        <button label="Registrar" onClick="@command('registrarS')" />
+        <button label="Registrar" onClick="@command('registrar')" />
+
+        <label id="errorMessage" value="@bind(vm.errorMessage)" style="color: red;" />
+
     </vbox>
 
 </window>

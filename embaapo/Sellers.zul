@@ -1,17 +1,19 @@
 <zk>
-    <window title="Lista de Sellers" border="normal" viewModel="@id('vm') @init('ViewModel.SellerListViewModel')">
+    <window title="Lista de Sellers" border="normal" apply="org.zkoss.bind.BindComposer"  
+    viewModel="@id('vm') @init('viewmodel.SellertListViewModel')">
         <grid model="@load(vm.sellers)">
             <columns>
                 <column label="ID" />
                 <column label="Nombre" />
-                <column label="Eliminar" />
+                <column label="Oficio" />
+                <column label="Acciones" />
             </columns>
             <template name="model" var="seller">
                 <row>
-                    <label value="@load(id)" />
-                    <label value="@load(nombre)" />
-                    <label value="@load(oficio)" />
-                    <button label="Eliminar" onClick="@command('eliminarSeller', id)" />
+                    <label value="@load(seller.id_seller)" />
+                    <label value="@load(seller.nombre)" />
+                    <label value="@load(seller.oficio)" />
+                    <button label="Eliminar" onClick="@command('eliminarSeller', seller.id_seller)" />
                 </row>
             </template>
         </grid>

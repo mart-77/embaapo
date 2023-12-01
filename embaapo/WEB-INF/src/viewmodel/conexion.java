@@ -4,7 +4,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Scanner;
 
+import org.zkoss.zk.ui.Component;
 
 public class conexion  {
 
@@ -16,14 +18,14 @@ public class conexion  {
 
 public conexion() {
         this.url = "jdbc:postgresql://localhost:5432/tp";
-        this.usuario = "postgres";
-        this.contrasenia = "0077";
+        this.usuario = "martin";
+        this.contrasenia = "1234";
         this.conexion = null;
     }
     public conexion(String url, String usuario, String contrasenia) {
         this.url = "jdbc:postgresql://localhost:5432/tp";
-        this.usuario = "postgres";
-        this.contrasenia = "0077";
+        this.usuario = "martin";
+        this.contrasenia = "1234";
         this.conexion = null;
     }
 
@@ -48,8 +50,13 @@ public conexion() {
         return conexion;
     }
 
- 
-
+    /**
+     
+Esta función toma como parámetro una conexión y una consulta sql, y retorna
+true si esa consulta muestra algún registro (por lo menos 1 fila)*
+@param consultaSql
+@return
+*/
 public boolean validarCredenciales(String email, String password) {
 
         try {
