@@ -20,8 +20,10 @@
         <textbox type="password" value="@bind(vm.password)" />
 
         <button label="Registrar" onClick="@command('registrar')" />
+
+         <label  value="@bind(vm.errorMessage)" style="color: red;" />
+
         
-        <label id="errorMessage" value="@bind(vm.errorMessage)" style="color: red;" />
 
     </vbox>
 

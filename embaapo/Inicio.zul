@@ -1,10 +1,15 @@
 <window id="inicioWindow" title="Página de Inicio" border="normal"
-    viewModel="@id('vm') @init('viewmodel.InicioViewModel')">
+        viewModel="@id('vm') @init('viewmodel.InicioViewModel')">
 
-    <vbox align="center" spacing="10px">
-        <button label="Login" href="Login.zul"/>
-        <button label="Sign In" href="SignIn.zul"/>
-        <button label="Olvide mi contraseña" href = "OlvideContrasena.zul" />
+    <vbox width="1920px" height="1080px" align="center" spacing="10px" style="background-color: #F5F5F5;">
+
+ <image src="pexels-andrea-piacquadio-3768914.jpg" width="300px" height="300px" style="object-fit: cover; border-radius: 15px;"/>
+        <vbox align="center" spacing="10px" style="padding: 20px;">
+            <button label="Login" href="Login.zul" style="width: 200px; height: 40px; border-radius: 20px; background-color: #4477AA; color: black;"/>
+            <button label="Sign In" href="SignIn.zul" style="width: 200px; height: 40px; border-radius: 20px; background-color: #4477AA; color: black;"/>
+            <button label="Olvidé mi contraseña" href="OlvideContrasena.zul" style="width: 200px; height: 40px; border-radius: 20px; background-color: #4477AA; color: black;"/>
+        </vbox>
+
     </vbox>
 
 </window>

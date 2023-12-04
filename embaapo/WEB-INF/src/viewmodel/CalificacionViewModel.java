@@ -1,15 +1,11 @@
 package viewmodel;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.Instant;
 import java.sql.*;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zk.ui.Executions;
 
 public class CalificacionViewModel {
             static CalificacionViewModel viewModel = new CalificacionViewModel();
@@ -34,6 +30,9 @@ public class CalificacionViewModel {
     
         if (guardarCalificacion()) {
             System.out.println("Calificación guardada con éxito");
+                    Executions.sendRedirect("Menu.zul");
+
+
         } else {
             System.out.println("Error al guardar la calificación: " + errorMessage);
         }

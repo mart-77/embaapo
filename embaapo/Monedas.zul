@@ -8,8 +8,7 @@
 
         <label value="Símbolo de la Moneda:" />
         <textbox value="@bind(vm.simbolo)" />
-        <label value="Usuario que lo modifico" />
-        <textbox value="@bind(vm.usuario_mod)" />
+      
 
         <button label="Guardar" onClick="@command('moneda')" />
     </vbox>

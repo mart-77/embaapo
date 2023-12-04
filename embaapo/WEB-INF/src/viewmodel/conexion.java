@@ -1,31 +1,29 @@
 package viewmodel;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
-import org.zkoss.zk.ui.Component;
-
-public class conexion  {
+public class conexion {
 
     private String url;
     private String usuario;
     private String contrasenia;
     private Connection conexion;
 
-
-public conexion() {
+    public conexion() {
         this.url = "jdbc:postgresql://localhost:5432/tp";
-        this.usuario = "martin";
-        this.contrasenia = "1234";
+        this.usuario = "postgres";
+        this.contrasenia = "0077";
         this.conexion = null;
     }
+
     public conexion(String url, String usuario, String contrasenia) {
         this.url = "jdbc:postgresql://localhost:5432/tp";
-        this.usuario = "martin";
-        this.contrasenia = "1234";
+        this.usuario = "postgres";
+        this.contrasenia = "0077";
         this.conexion = null;
     }
 
@@ -36,7 +34,6 @@ public conexion() {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         // Se crea la conexión
         try {
             // Conexión con la base de datos
@@ -50,19 +47,11 @@ public conexion() {
         return conexion;
     }
 
-    /**
-     
-Esta función toma como parámetro una conexión y una consulta sql, y retorna
-true si esa consulta muestra algún registro (por lo menos 1 fila)*
-@param consultaSql
-@return
-*/
-public boolean validarCredenciales(String email, String password) {
+    public boolean validarCredenciales(String email, String password) {
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
-                                System.out.println("Conecto");
-
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres","0077");
+            System.out.println("Conecto");
             // Consulta para verificar las credenciales
             String consulta = "SELECT * FROM usuario WHERE email = ? AND password = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(consulta)) {
@@ -81,4 +70,34 @@ public boolean validarCredenciales(String email, String password) {
         }
 
     }
+
+
+    public static void main(String[] args) {
+        testValidarCredenciales();
+    }
+
+    private static void testValidarCredenciales() {
+        conexion connect = new conexion();  // Asegúrate de que estás utilizando la misma clase que contiene validarCredenciales
+
+        // Prueba credenciales válidas
+        boolean resultadoValido = connect.validarCredenciales("admin@example.com", "0077");
+        if (resultadoValido) {
+            System.out.println("Credenciales válidas");
+        } else {
+            System.out.println("Credenciales inválidas");
+        }
+
+        // Prueba credenciales inválidas
+        boolean resultadoInvalido = connect.validarCredenciales("usuario@example.com", "otra_contraseña");
+        if (!resultadoInvalido) {
+            System.out.println("Credenciales inválidas");
+        } else {
+            System.out.println("Credenciales válidas");
+        }
+    }
 }
+
+
+
+
+

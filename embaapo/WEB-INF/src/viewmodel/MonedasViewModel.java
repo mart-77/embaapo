@@ -9,6 +9,8 @@ import java.time.Instant;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
+
 import java.sql.Timestamp;
 
 public class MonedasViewModel {
@@ -21,12 +23,14 @@ public class MonedasViewModel {
 
     @Init
     public void initCalificar() {
+
         connect = new conexion();
         connect.crearConexion();
     }
 
     @Command
     public void moneda() {
+        
         if (guardarMoneda()) {
             Executions.sendRedirect("/Menu.zul");
         } else {
@@ -45,7 +49,6 @@ public class MonedasViewModel {
         try (Connection connection = DriverManager.getConnection(url, usuario, contraseña)) {
             // Preparar la consulta SQL para insertar en la tabla divisas
             Timestamp timestampMod = Timestamp.from(fecha_mod);
-
             String consulta = "UPDATE diviza SET nombre = ?, simbolo = ?, usuario_mod = ?, fecha_mod = ? WHERE id_diviza = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(consulta)) {
                 preparedStatement.setString(1, nombre);
@@ -101,14 +104,14 @@ public class MonedasViewModel {
     public void setFecha_mod(Instant fecha_mod) {
         this.fecha_mod = fecha_mod;
     }
-
-    public static void main(String[] args) {
+/* 
+     public static void main(String[] args) {
         MonedasViewModel viewModel = new MonedasViewModel();
         // Configurar datos de prueba (ajusta según tus necesidades)
 
-        viewModel.nombre = "Guaranies";
-        viewModel.simbolo = "G";
-        viewModel.usuario_mod = "Admin";
+        viewModel.nombre = "Dolares";
+        viewModel.simbolo = "$";
+        viewModel.usuario_mod = "admin@example.com";
 
 
         // Llamar a guardarMoneda y mostrar el resultado
@@ -120,4 +123,5 @@ public class MonedasViewModel {
         }
 
     }
+    /* */
 }

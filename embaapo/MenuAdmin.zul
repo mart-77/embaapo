@@ -1,5 +1,5 @@
 <window id="inicioWindow" title="Página de Inicio" border="normal"
-    viewModel="@id('vm') @init('viewmodel.MenuViewModel')">
+    viewModel="@id('vm') @init('viewmodel.MenuAdminViewModel')">
 
     <vbox align="center" spacing="10px">
         <button label="Log Out" href="Inicio.zul"/>
