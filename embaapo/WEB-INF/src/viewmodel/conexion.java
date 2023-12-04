@@ -4,13 +4,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Scanner;
 
-import org.mindrot.jbcrypt.BCrypt;
-
+import org.zkoss.zk.ui.Component;
 
 public class conexion  {
 
@@ -53,11 +49,14 @@ public conexion() {
     public Connection getConexion() {
         return conexion;
     }
- 
 
-    
-
-
+    /**
+     
+Esta función toma como parámetro una conexión y una consulta sql, y retorna
+true si esa consulta muestra algún registro (por lo menos 1 fila)*
+@param consultaSql
+@return
+*/
 public boolean validarCredenciales(String email, String password) {
 
         try {

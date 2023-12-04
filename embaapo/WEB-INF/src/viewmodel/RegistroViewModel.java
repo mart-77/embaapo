@@ -17,7 +17,7 @@ import java.time.Instant;
 import java.util.Scanner;
 
 public class RegistroViewModel {
-    private static String errorMessage;
+    private String errorMessage;
     private static String nombre;
     private static String apellido;
     private static String email;
@@ -34,28 +34,23 @@ public class RegistroViewModel {
     }
 
     @Command
-    @NotifyChange( "errorMessage" )
+    @NotifyChange({ "errorMessage" })
     public void registrar() {
-       
+        if (!validarDatosRegistro(nombre, apellido, email, telefono, password)) {
+            errorMessage = "Datos de registro no válidos.";
             if (registrarEnBaseDeDatos()) {
                 // Registro exitoso, redirigir a la página de inicio de sesión
                 Executions.sendRedirect("Login.zul");
             } else {
-                errorMessage = "Campos vacios";
+                errorMessage = "Usuario o contraseña incorrectos";
 
                 // Error al registrar en la base de datos, manejar según sea necesario
             }
-        
+        }
     }
 
-    public static boolean validarDatosRegistro(String nombre, String apellido, String email, String telefono,String password) {
-        System.out.println("Nombre: " + nombre);
-System.out.println("Apellido: " + apellido);
-System.out.println("Email: " + email);
-System.out.println("Teléfono: " + telefono);
-System.out.println("Password: " + password);
-System.out.println("Error Message: " + errorMessage);
-
+    public boolean validarDatosRegistro(String nombre, String apellido, String email, String telefono,
+            String password) {
         // Verificar que todos los campos sean obligatorios
         if (nombre == null || nombre.isEmpty() ||
                 apellido == null || apellido.isEmpty() ||
@@ -92,15 +87,16 @@ System.out.println("Error Message: " + errorMessage);
         return true;
     }
 
-    public static boolean validarFormatoEmail(String email) {
+    public boolean validarFormatoEmail(String email) {
         // Utilizando una expresión regular simple para verificar el formato del email
         String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-    return email.matches(regex);
+        return email.matches(regex);
     }
 
-    public static boolean verificarEmailExistente(String email) {
+    public boolean verificarEmailExistente(String email) {
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tpdb", "martin", "1234")) {
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin",
+                        "1234");) {
             String sql = "SELECT COUNT(*) FROM usuario WHERE email = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, email);
@@ -114,31 +110,28 @@ System.out.println("Error Message: " + errorMessage);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Error al verificar si el correo electrónico existe: " + e.getMessage(), e);
-            
             // Manejo de excepciones según sea necesario
         }
         return false; // En caso de error, consideramos que el email no existe
     }
 
     private static boolean registrarEnBaseDeDatos() {
-          System.out.println("Datos ingresados:");
-          System.out.println("Nombre: " + nombre);
-          System.out.println("Apelliod: " + apellido);
-          System.out.println("Email: " + email);
-          System.out.println("Password: " + password);
-         System.out.println("Telfono: " + telefono);
- if (validarDatosRegistro(nombre, apellido, email, telefono, password)) {
-            errorMessage = "Datos de registro no válidos.";
-         
+
+        System.out.println("Datos ingresados:");
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Apelliod: " + apellido);
+        System.out.println("Email: " + email);
+        System.out.println("Password: " + password);
+        System.out.println("Telfono: " + telefono);
+
         try {
-            Timestamp timestampInsersion = Timestamp.from(fecha_insersion);
-            Timestamp timestampMod = Timestamp.from(fecha_mod);
             Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin",
                     "1234");
+            Timestamp timestampInsersion = Timestamp.from(fecha_insersion);
+            Timestamp timestampMod = Timestamp.from(fecha_mod);
 
             // Consulta para insertar el nuevo usuario
-            String consulta = "INSERT INTO usuario (id_rol,nombre, apellido, email, telefono, password, usuario_mod, fecha_insersion,fecha_mod, id_usuario) VALUES (?, ?, ?, ?, ?,?,?,?, ?, ?)";
+            String consulta = "INSERT INTO usuario (id_rol ,nombre, apellido, email, telefono, password,  fecha_insersion,fecha_mod) VALUES (?, ?, ?, ?, ?,?,?,?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(consulta)) {
                 preparedStatement.setInt(1, 3);
                 preparedStatement.setString(2, nombre);
@@ -146,10 +139,8 @@ System.out.println("Error Message: " + errorMessage);
                 preparedStatement.setString(4, email);
                 preparedStatement.setString(5, telefono);
                 preparedStatement.setString(6, password);
-                preparedStatement.setInt(7, 1);
-                preparedStatement.setObject(8, timestampInsersion);
-                preparedStatement.setObject(9, timestampMod);
-                preparedStatement.setInt(10,5);
+                preparedStatement.setObject(7, timestampInsersion);
+                preparedStatement.setObject(8, timestampMod);
 
                 // Ejecutar la inserción
                 int filasAfectadas = preparedStatement.executeUpdate();
@@ -162,10 +153,24 @@ System.out.println("Error Message: " + errorMessage);
             return false;
         }
     }
-return false;
-}
 
-    /*public static void main(String[] args) {
+    public void setFecha_insersion(Instant fecha_insersion) {
+        this.fecha_insersion = fecha_insersion;
+    }
+
+    public void setFecha_mod(Instant fecha_mod) {
+        this.fecha_mod = fecha_mod;
+    }
+
+    public Instant getFecha_insersion() {
+        return fecha_insersion;
+    }
+
+    public Instant getFecha_mod() {
+        return fecha_mod;
+    }
+
+    public static void main(String[] args) {
         // Solicitar datos al usuario
         Scanner scanner = new Scanner(System.in);
         System.out.println("Ingrese su nombre: ");
@@ -178,66 +183,13 @@ return false;
         telefono = scanner.next();
         System.out.println("Ingrese su pasword: ");
         password = scanner.next();
-
         // Ejecutar la autenticación
         if (registrarEnBaseDeDatos()) {
             System.out.println("Se creo en la base de datos");
         } else {
             System.out.println("No se creo en la base de datos.Por favor, inténtalo de nuevo.");
         }
-    }/* */
-   /*  public static void main(String[] args) {
-        testValidarFormatoEmail();
     }
-
-    private static void testValidarFormatoEmail() {
-        conexion connect = new conexion();  // Asegúrate de que estás utilizando la misma clase que contiene validarFormatoEmail
-
-        // Prueba con un email válido
-        boolean resultadoValido = validarFormatoEmail("admin@example.com");
-        if (resultadoValido) {
-            System.out.println("El formato del email es válido");
-        } else {
-            System.out.println("El formato del email no es válido");
-        }
-
-        // Prueba con un email inválido
-        boolean resultadoInvalido = validarFormatoEmail("correo_invalido");
-        if (!resultadoInvalido) {
-            System.out.println("El formato del email no es válido");
-        } else {
-            System.out.println("El formato del email es válido");
-        }
-    }/* */
-   /* public static void main(String[] args) {
-        testValidarDatosRegistro();
-    }
-
-    private static void testValidarDatosRegistro() {
-        conexion connect = new conexion();  // Asegúrate de que estás utilizando la misma clase que contiene validarDatosRegistro
-
-        // Prueba con datos válidos
-        boolean resultadoValido = validarDatosRegistro("Nombre", "Apellido", "usuario@example.com", "123456789", "contrasena");
-        if (resultadoValido) {
-            System.out.println("Los datos de registro son válidos");
-        } else {
-            System.out.println("Invalido");
-        }
-
-        // Prueba con datos inválidos (correo ya existente)
-        boolean resultadoInvalidoCorreoExistente = validarDatosRegistro("Nombre", "Apellido", "admin@example.com", "123456789", "contrasena");
-        if (!resultadoInvalidoCorreoExistente) {
-            System.out.println("Invalido");
-        }
-
-        // Prueba con datos inválidos (formato de correo incorrecto)
-        boolean resultadoInvalidoFormatoCorreo = validarDatosRegistro("Nombre", "Apellido", "correo_invalido", "123456789", "contrasena");
-        if (!resultadoInvalidoFormatoCorreo) {
-            System.out.println("Invalido");
-        }
-
-        // Agrega más casos de prueba según sea necesario
-    }/* */
 
     public String getEmail() {
         return email;
@@ -279,41 +231,12 @@ return false;
         this.telefono = telefono;
     }
 
-   /*  public static void main(String[] args) {
-        testVerificarEmailExistente();
-    }/* 
-
-    /*private static void testVerificarEmailExistente() {
-        conexion connect = new conexion();  // Asegúrate de que estás utilizando la misma clase que contiene verificarEmailExistente
-
-        // Prueba con un email existente
-        boolean resultadoExistente = verificarEmailExistente("admin@example.com");
-        if (resultadoExistente) {
-            System.out.println("El email ya existe en la base de datos");
-        } else {
-            System.out.println("El email no existe en la base de datos");
-        }
-
-        // Prueba con un email inexistente
-        boolean resultadoInexistente = verificarEmailExistente("nuevo_usuario@example.com");
-        if (!resultadoInexistente) {
-            System.out.println("El email no existe en la base de datos");
-        } else {
-            System.out.println("El email ya existe en la base de datos");
-        }
-    }/* */
-
-
-    public String geterrorMessage() {
+    public String getErrorMessage() {
         return errorMessage;
     }
-     public void seterrorMessage(String errorMessage) {
+
+    public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
-
-
-
-
-
 
 }

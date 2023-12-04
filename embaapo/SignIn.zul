@@ -14,14 +14,14 @@
         <textbox value="@bind(vm.email)" />
 
         <label value="Teléfono:" />
-        <textbox value="@bind(vm.telefono)" />
+        <intbox value="@bind(vm.telefono)" />
 
         <label value="Contraseña:" />
         <textbox type="password" value="@bind(vm.password)" />
 
         <button label="Registrar" onClick="@command('registrar')" />
-
-
+        
+        <label  value="@bind(vm.errorMessage)" style="color: red;" /> 
 
     </vbox>
 

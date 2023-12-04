@@ -3,8 +3,10 @@
 
     <vbox align="center" spacing="10px">
         <button label="Log Out" href="Inicio.zul"/>
-        <button label="Calificar" href = "Calificar.zul" />
+        <button label="Dar Roles" href="DarRoles.zul"/>
+        <button label="Monedas" href = "Monedas.zul" />
         <button label="Quiero ser seller" href = "RegistrarSeller.zul" />
+        <button label="Seller" href = "DeleteSeller.zul" />
 
 
 

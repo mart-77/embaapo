@@ -6,14 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 import java.sql.*;
-import java.time.Instant;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.zk.ui.Executions;
 
 public class CalificacionViewModel {
             static CalificacionViewModel viewModel = new CalificacionViewModel();
