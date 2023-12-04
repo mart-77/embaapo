@@ -1,8 +1,9 @@
 
-    <window id="DarRolesWindow" title="Otorgar Roles" border="normal"
+    <window id="DarRolesWindow" title="Otorgar Roles" border="normal"  apply="org.zkoss.bind.BindComposer"
             viewModel="@id('vm') @init('viewmodel.DarRolesViewModel')">
 
-         <grid model="@load(vm.usuarios)">
+
+         <grid model="@load(vm.usuarios)" height="300px">
         <columns>
             <column label="ID Usuario"/>
             <column label="Nombre"/>

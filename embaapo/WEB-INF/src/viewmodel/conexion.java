@@ -4,7 +4,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
+import java.util.*;
 
 import org.zkoss.zk.ui.Component;
 
@@ -81,7 +81,6 @@ public boolean validarCredenciales(String email, String password) {
         }
     }
 
-    
 
     public List<Map<String, Object>> obtenerUsuarios() {
 
@@ -109,7 +108,6 @@ public boolean validarCredenciales(String email, String password) {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return listaUsuarios;
     }
 

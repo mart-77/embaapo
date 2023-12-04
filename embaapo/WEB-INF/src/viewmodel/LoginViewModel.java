@@ -4,6 +4,7 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
 
 public class LoginViewModel{
 
@@ -21,14 +22,26 @@ public class LoginViewModel{
     @Command
     @NotifyChange({"errorMessage"})
     public void login() {
-        System.out.println("Email y Password: " + email + password );
+        System.out.println("Email y Password: " + email + password);
         if (connect.validarCredenciales(email, password)) {
+                    Sessions.getCurrent().setAttribute("email", email);
 
-        Executions.sendRedirect("Menu.zul");
+            // Obtener el id_rol del usuario
+
+            // Redirigir según el id_rol o el correo
+            redirigirSegunCredenciales( email);
+            System.out.println("email: " + email  );
 
         } else {
-             errorMessage = "Usuario o contraseña incorrectos";
+            errorMessage = "Usuario o contraseña incorrectos";
         }
+    }
+            private static void redirigirSegunCredenciales( String email) {
+                if ("a".equalsIgnoreCase(email)) {
+                    Executions.sendRedirect("/MenuAdmin.zul");
+                } else {
+                    Executions.sendRedirect("/Menu.zul");
+                }
             }
 
     //Getters y Setters

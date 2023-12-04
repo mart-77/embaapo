@@ -2,21 +2,21 @@ package viewmodel;
 
 import org.zkoss.bind.annotation.Init;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class DarRolesViewModel {
+    
     private conexion connect;
     private List<Map<String, Object>> usuarios;
 
     @Init
     public void initDarRoles() {
-        System.out.println("Init method called!");
+        System.out.println("\n\n\n\n\n\n\nInit method called!");
         connect = new conexion();
         connect.crearConexion();
         usuarios = connect.obtenerUsuarios();
-    
+
         // Verificar que la lista de usuarios se haya llenado correctamente
         System.out.println("Total de usuarios en ViewModel: " + usuarios.size());
     }
@@ -29,8 +29,7 @@ public class DarRolesViewModel {
         this.usuarios = usuarios;
     }
 
-
-public static void main(String[] args) {
+    public static void main(String[] args) {
         conexion conncect = new conexion();
         conncect.crearConexion();
 
@@ -45,6 +44,3 @@ public static void main(String[] args) {
         }
     }
 }
-
-
-

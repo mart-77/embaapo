@@ -1,7 +1,6 @@
 {
     "java.project.sourcePaths": [
-        "embaapo/WEB-INF/src",
-        "embaapo/WEB-INF/lib"
+        "embaapo\\WEB-INF\\src"
     ],
     "java.project.outputPath": "embaapo\\WEB-INF\\classes",
     "java.project.referencedLibraries": [
@@ -41,5 +40,6 @@
             "database": "tp",
             "username": "postgres"
         }
-    ]
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
