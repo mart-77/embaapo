@@ -1,103 +1,177 @@
 package viewmodel;
 
-import java.util.List;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
+import org.zkoss.zk.ui.Executions;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.*;
 
 public class SellertListViewModel {
+     private  String nombre;
+    private  int cedula;
+    private  Date nacimiento;
+    private  String direccion;
+    private  String oficio;
+    private  Instant fecha_insersion = Instant.now();
+    private  Instant fecha_mod = Instant.now();
     private conexion connect;
-
-    private List<Seller> sellers;
+    private List<Map<String, Object>> sellers;
 
     @Init
     public void initSeller() {
+        System.out.println("\n\n\n\n\n\n\nInit method called!");
         connect = new conexion();
         connect.crearConexion();
+        sellers = connect.obtenerSellers();
+    }
+     @Command
+    public void actualizar() {
+      //  if (!validarDatosUsuario(  nombre,  cedula,  nacimiento,  direccion,  oficio )) {
+            if (actualizarSeller()) {
+                // Registro exitoso, redirigir a la página de inicio de sesión
+                Executions.sendRedirect("Menu.zul");
+            } else {
+
+
+                // Error al registrar en la base de datos, manejar según sea necesario
+            }
+    //   }
     }
 
-    @Command
-    public void eliminarSeller(Seller seller) {
-        if (eliminarSellerEnBaseDeDatos(seller.getId_seller())) {
-            // Vuelve a cargar los sellers después de eliminar uno
-            sellers = cargarSellersDesdeBaseDeDatos();
+    private boolean actualizarSeller() {
+        System.out.println("Datos ingresados:");
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Cédula: " + cedula);
+        System.out.println("Nacimiento: " + nacimiento);
+        System.out.println("Dirección: " + direccion);
+        System.out.println("Oficio: " + oficio);
+        System.out.println("Fecha de Insersión: " + fecha_insersion);
+    
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
+            Timestamp timestampInsersion = Timestamp.from(fecha_insersion);
+            Timestamp timestampMod = Timestamp.from(fecha_mod);
+    
+            // Convertir java.util.Date a java.sql.Date
+            java.sql.Date sqlDate = new java.sql.Date(nacimiento.getTime());
+    
+            // Consulta para insertar el nuevo usuario
+            String consulta = "UPDATE seller SET cedula = ?, fecha_nacimiento = ?, direccion = ?, oficio = ?, fecha_mod = ? WHERE nombre = ?";
+            
+            try (PreparedStatement preparedStatement = connection.prepareStatement(consulta)) {
+                preparedStatement.setString(1, nombre);
+                preparedStatement.setInt(2, cedula);
+                preparedStatement.setDate(3, sqlDate);
+                preparedStatement.setString(4, direccion);
+                preparedStatement.setString(5, oficio);
+                preparedStatement.setObject(6, timestampInsersion);
+                preparedStatement.setObject(7, timestampMod);
+    
+                // Ejecutar la inserción
+                int filasAfectadas = preparedStatement.executeUpdate();
+    
+                return filasAfectadas > 0;
+            }
+        } catch (SQLException e) {
+            // Manejo de excepciones (registra o maneja según sea necesario)
+            e.printStackTrace();
+            return false;
         }
     }
     
+ public static void main(String[] args) {
+        conexion conncect = new conexion();
+        conncect.crearConexion();
 
-    public List<Seller> getSellers() {
-        return sellers;
-    }
+       List<Map<String, Object>> sellers = conncect.obtenerSellers();
 
-    public void setSellers(List<Seller> sellers) {
-        this.sellers = sellers;
+        for (Map<String, Object> seller : sellers) {
+            System.out.println("ID Seller: " + seller.get("id_seller"));
+            System.out.println("Nombre: " + seller.get("nombre"));
+            System.out.println("Oficio: " + seller.get("oficio"));
+            System.out.println("------");
+        }
     }
+ 
+    
+
+    
+   
 
     private Connection obtenerConexion() throws SQLException {
         return DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
     }
-   // Método para cargar los sellers desde la base de datos
-   private List<Seller> cargarSellersDesdeBaseDeDatos() {   
-            System.out.println("Entro en la carga");
 
-    List<Seller> sellers = new ArrayList<>();
-    try (Connection connection = obtenerConexion()) {
-            String sql = "SELECT id_seller, nombre, oficio FROM seller";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        int id_seller = resultSet.getInt("id_seller");
-                        String nombre = resultSet.getString("nombre");
-                        String oficio = resultSet.getString("oficio");
-
-                        sellers.add(new Seller(id_seller, nombre,oficio));
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Manejo de excepciones según sea necesario
-        }
-        System.out.println("Salio en la carga");
-
-    return sellers;
-}
-    // Método para eliminar un seller en la base de datos
-    private boolean eliminarSellerEnBaseDeDatos(int id_seller) {
-        System.out.println("Entro en la eliminacion");
-
-        try (Connection connection = obtenerConexion()) {
-            String sql = "DELETE FROM seller WHERE id_seller = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setInt(1, id_seller);
-                preparedStatement.executeUpdate();
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Manejo de excepciones según sea necesario
-                    System.out.println("Salio en la eliminacion");
-
-            return false;
-        }
-
+    public conexion getConnect() {
+        return connect;
     }
-   
-    
 
+    public void setConnect(conexion connect) {
+        this.connect = connect;
+    }
 
+    public List<Map<String, Object>> getSellers() {
+        return sellers;
+    }
 
+    public void setSellers(List<Map<String, Object>> sellers) {
+        this.sellers = sellers;
+    }
+   public int getCedula() {
+        return cedula;
+    }
 
+    public void setCedula(int cedula) {
+        this.cedula = cedula;
+    }
+    public Date getNacimiento() {
+        return nacimiento;
+    }
 
+    public void setNacimiento(Date nacimiento) {
+        this.nacimiento = nacimiento;
+    }
+  public String getNombre() {
+        return nombre;
+    }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+   public String getDireccion() {
+        return direccion;
+    }
 
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+    public String getOficio() {
+        return oficio;
+    }
 
+    public void setOficio(String oficio) {
+        this.oficio = oficio;
+    }
+     public Instant  getFecha_insersion() {
+        return fecha_insersion;
+    }
+
+    public void setFecha_insersion(Instant  fecha_insersion) {
+        this.fecha_insersion = fecha_insersion;
+    }
+     public Instant  getFecha_mod() {
+        return fecha_mod;
+    }
+
+    public void setfecha_mod(Instant  fecha_mod) {
+        this.fecha_mod = fecha_mod;
+    }
 
 
 }

@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
-
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -12,8 +11,8 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Comboitem;
 
-public class CalificacionViewModel {
 
+public class ActualizarCalificacionViewModel {
     private conexion connect;
     private String errorMessage;
     String nombreSeller;
@@ -38,20 +37,9 @@ public class CalificacionViewModel {
         connect.crearConexion();
     }
 
-    @NotifyChange({ "errorMessage" })
-    @Command
-    public void agregarcalificar() {
-        if (guardarCalificacion()) {
-            System.out.println("Calificación guardada con éxito");
-            Executions.sendRedirect("Menu.zul");
-
-        } else {
-            System.out.println("Error al guardar la calificación: " + errorMessage);
-        }
-    }
  @Command
     public void actualizarcalificar() {
-        if (guardarCalificacion()) {
+        if (actualizarCalificacion()) {
             System.out.println("Calificación guardada con éxito");
             Executions.sendRedirect("Menu.zul");
 
@@ -109,7 +97,7 @@ public class CalificacionViewModel {
         return nombres;
     }
 
-    public boolean guardarCalificacion() {
+    public boolean actualizarCalificacion() {
         if (nombreSeller != null && descripcion != null) {
             guardarNumeroSeleccionado();
             try (Connection connection = obtenerConexion()) {
@@ -118,7 +106,7 @@ public class CalificacionViewModel {
                 Timestamp timestampInsersion = Timestamp.from(fecha_insersion);
                 Timestamp timestampMod = Timestamp.from(fecha_mod);
                 // Insertar en la tabla calificacion
-                String sql = "INSERT INTO calificacion (id_seller, descripcion, fecha_mod,fecha_insersion) VALUES (?, ?, ?,?)";
+        String sql = "UPDATE calificacion SET descripcion = ?, fecha_mod = ? WHERE id_seller = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                     preparedStatement.setInt(1, idSeller);
                     preparedStatement.setString(2, descripcion);
@@ -319,5 +307,4 @@ public class CalificacionViewModel {
      * return errorMessage;
      * }/*
      */
-
 }

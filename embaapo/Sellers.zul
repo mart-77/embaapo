@@ -1,19 +1,25 @@
 <zk>
     <window title="Lista de Sellers" border="normal" apply="org.zkoss.bind.BindComposer"  
     viewModel="@id('vm') @init('viewmodel.SellertListViewModel')">
-        <grid model="@load(vm.sellers)">
+        <grid model="@load(vm.sellers)"  height="300px">
             <columns>
                 <column label="ID" />
                 <column label="Nombre" />
                 <column label="Oficio" />
-                <column label="Acciones" />
+                <column label="Agregar" />
+                <column label="Actualizar " />
+                <column label="Eliminar" />
+
             </columns>
             <template name="model" var="seller">
                 <row>
                     <label value="@load(seller.id_seller)" />
                     <label value="@load(seller.nombre)" />
                     <label value="@load(seller.oficio)" />
-                    <button label="Eliminar" onClick="@command('eliminarSeller', seller.id_seller)" />
+                    <button label="Agregar" href="RegistrarSeller.zul"  />
+                    <button label="Actualizar" href="ActualizarSeller.zul" /> 
+                    <button label="Eliminar" href="DeleteSeller.zul" />
+
                 </row>
             </template>
         </grid>

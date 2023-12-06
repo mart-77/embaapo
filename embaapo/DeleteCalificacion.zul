@@ -1,0 +1,14 @@
+<window title="Eliminar Califacion" border="normal" apply="org.zkoss.bind.BindComposer"  
+        viewModel="@id('vm')
+         @init('viewmodel.CalificacionListViewModel')">
+        
+        <vbox>
+            <label value="Ingrese el ID de la Calificacion a eliminar:" />
+            <textbox value="@bind(vm.id_calificacion)" />
+
+            <button label="Eliminar" onClick="@command('eliminarCalificacion')" />
+            
+            <label id="errorMessage" value="@load(vm.errorMessage)" style="color: red;" />
+        </vbox>
+        
+    </window>

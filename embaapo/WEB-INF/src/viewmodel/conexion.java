@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.*;
 
 public class conexion {
 
@@ -50,7 +51,8 @@ public class conexion {
     public boolean validarCredenciales(String email, String password) {
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres","0077");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres",
+                    "0077");
             System.out.println("Conecto");
             // Consulta para verificar las credenciales
             String consulta = "SELECT * FROM usuario WHERE email = ? AND password = ?";
@@ -71,13 +73,187 @@ public class conexion {
 
     }
 
+    // Método para cargar los sellers desde la base de datos
+    public List<Map<String, Object>> obtenerSellers() {
+        List<Map<String, Object>> listaSellers = new ArrayList<>();
+        System.out.println("Entro en la carga");
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres",
+                "0077");) {
+            String sql = "SELECT id_seller, nombre, oficio FROM seller";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Map<String, Object> seller = new HashMap<>();
+                        seller.put("id_seller", resultSet.getInt("id_seller"));
+                        seller.put("nombre", resultSet.getString("nombre"));
+                        seller.put("oficio", resultSet.getString("oficio"));
+                        listaSellers.add(seller);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo de excepciones según sea necesario
+        }
+        System.out.println("Salio en la carga");
+
+        return listaSellers;
+    }
+    // Método para cargar los sellers desde la base de datos
+    public List<Map<String, Object>> obtenerCalificaciones() {
+        List<Map<String, Object>> listaCalificaciones = new ArrayList<>();
+        System.out.println("Entro en la carga");
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres",
+                "0077");) {
+            String sql = "SELECT id_calificacion, id_seller, descripcion,puntuacion  FROM seller";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Map<String, Object> calificacion = new HashMap<>();
+                        calificacion.put("id_calificacion", resultSet.getInt("id_calificacion"));
+                        calificacion.put("id_seller", resultSet.getInt("id_seller"));
+                        calificacion.put("descripcion", resultSet.getString("descripcion"));
+                        calificacion.put("puntuacion", resultSet.getInt("puntuacion"));
+                        listaCalificaciones.add(calificacion);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo de excepciones según sea necesario
+        }
+        System.out.println("Salio en la carga");
+
+        return listaCalificaciones;
+    }
+    // Método para cargar los sellers desde la base de datos
+    public List<Map<String, Object>> obtenerMonedas() {
+        List<Map<String, Object>> listaMonedas = new ArrayList<>();
+        System.out.println("Entro en la carga");
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres",
+                "0077");) {
+            String sql = "SELECT id_diviza, nombre, simbolo FROM diviza";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Map<String, Object> moneda = new HashMap<>();
+                        moneda.put("id_diviza", resultSet.getInt("id_diviza"));
+                        moneda.put("nombre", resultSet.getInt("nombre"));
+                        moneda.put("simbolo", resultSet.getString("simbolo"));
+                        listaMonedas.add(moneda);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo de excepciones según sea necesario
+        }
+        System.out.println("Salio en la carga");
+
+        return listaMonedas;
+    }
+      public List<Map<String, Object>> obtenerServicios() {
+        List<Map<String, Object>> listaServicios = new ArrayList<>();
+        System.out.println("Entro en la carga");
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres",
+                "0077");) {
+            String sql = "SELECT sa.id_servicio, sa.titulo, sa.tarifa," + 
+                    "       s.id_seller, s.nombre, s.direccion, s.oficio" + 
+                    "FROM seller_anuncio sa" + 
+                    "JOIN seller s ON sa.id_seller = s.id_seller;";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Map<String, Object> servicio = new HashMap<>();
+                        servicio.put("id_servicio", resultSet.getInt("id_servicio"));
+                        servicio.put("id_seller", resultSet.getInt("id_seller"));
+                        servicio.put("titulo", resultSet.getString("titulo"));
+                        servicio.put("tarifa", resultSet.getString("tarifa"));
+                        servicio.put("nombre", resultSet.getString("nombre"));
+                        servicio.put("direccion", resultSet.getString("direccion"));
+                        servicio.put("oficio", resultSet.getString("oficio"));
+                        listaServicios.add(servicio);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo de excepciones según sea necesario
+        }
+        System.out.println("Salio en la carga");
+
+        return listaServicios;
+    }
+        public List<Map<String, Object>> buscarServicios(String terminoBusqueda) {
+        List<Map<String, Object>> listaServicios = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077")) {
+            String sql = "SELECT sa.id_servicio, sa.titulo, sa.tarifa, s.id_seller, s.nombre, s.direccion, s.oficio " +
+                         "FROM seller_anuncio sa " +
+                         "JOIN seller s ON sa.id_seller = s.id_seller " +
+                         "WHERE lower(sa.titulo) LIKE ?"; // Utilizamos LOWER para hacer la búsqueda insensible a mayúsculas y minúsculas
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, "%" + terminoBusqueda.toLowerCase() + "%"); // Agregamos % para la búsqueda parcial
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Map<String, Object> servicio = new HashMap<>();
+                        servicio.put("id_servicio", resultSet.getInt("id_servicio"));
+                        servicio.put("id_seller", resultSet.getInt("id_seller"));
+                        servicio.put("titulo", resultSet.getString("titulo"));
+                        servicio.put("tarifa", resultSet.getString("tarifa"));
+                        servicio.put("nombre", resultSet.getString("nombre"));
+                        servicio.put("direccion", resultSet.getString("direccion"));
+                        servicio.put("oficio", resultSet.getString("oficio"));
+                        listaServicios.add(servicio);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo de excepciones según sea necesario
+        }
+
+        return listaServicios;
+    }
 
     public static void main(String[] args) {
+        // Crear una instancia de conexión
+        conexion connect = new conexion();
+
+        // Término de búsqueda para la prueba
+        String terminoBusqueda = "Servicio Ejemplo"; // Reemplaza con el término que deseas buscar
+
+        // Llamar a la función de búsqueda
+        List<Map<String, Object>> resultados = connect.buscarServicios(terminoBusqueda);
+
+        // Imprimir los resultados
+        if (!resultados.isEmpty()) {
+            System.out.println("Resultados de la búsqueda para '" + terminoBusqueda + "':");
+            for (Map<String, Object> servicio : resultados) {
+                System.out.println("ID Servicio: " + servicio.get("id_servicio"));
+                System.out.println("ID Seller: " + servicio.get("id_seller"));
+                System.out.println("Título: " + servicio.get("titulo"));
+                System.out.println("Tarifa: " + servicio.get("tarifa"));
+                System.out.println("Nombre: " + servicio.get("nombre"));
+                System.out.println("Dirección: " + servicio.get("direccion"));
+                System.out.println("Oficio: " + servicio.get("oficio"));
+                System.out.println("------");
+            }
+        } else {
+            System.out.println("No se encontraron resultados para '" + terminoBusqueda + "'.");
+        }
+    }
+
+
+
+  /*   public static void main(String[] args) {
         testValidarCredenciales();
     }
 
     private static void testValidarCredenciales() {
-        conexion connect = new conexion();  // Asegúrate de que estás utilizando la misma clase que contiene validarCredenciales
+        conexion connect = new conexion(); // Asegúrate de que estás utilizando la misma clase que contiene
+                                           // validarCredenciales
 
         // Prueba credenciales válidas
         boolean resultadoValido = connect.validarCredenciales("admin@example.com", "0077");
@@ -94,10 +270,5 @@ public class conexion {
         } else {
             System.out.println("Credenciales válidas");
         }
-    }
+    }/* */
 }
-
-
-
-
-
