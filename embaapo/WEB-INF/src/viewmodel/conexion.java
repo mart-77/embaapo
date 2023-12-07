@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-
+import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
 
 public class conexion  {
@@ -88,8 +88,7 @@ public boolean validarCredenciales(String email, String password) {
 
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin", "1234")) {
 
-
-        String sql = "SELECT u.id_usuario, u.nombre, u.email, r.descripcion AS rol_descripcion " +
+        String sql = "SELECT u.id_usuario, u.nombre, u.email, u.id_rol, r.descripcion AS rol_descripcion " +
         "FROM usuario u " +
         "JOIN rol r ON u.id_rol = r.id_rol";
 
@@ -110,6 +109,50 @@ public boolean validarCredenciales(String email, String password) {
         }
         return listaUsuarios;
     }
+
+    public List<String> obtenerRoles() {
+        List<String> listaRoles = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin", "1234")) {
+            String sql = "SELECT descripcion FROM rol";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        listaRoles.add(resultSet.getString("descripcion"));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listaRoles;
+    }
+
+
+
+    public void actualizarRolUsuario( Map<String, Object> usuario)  {
+        // Obtener el nuevo rol seleccionado del Map
+
+    
+        String nuevoRol = (String) usuario.get("rol_descripcion");
+        int idUsuario = (int) usuario.get("id_usuario");
+
+        System.out.println("Nuevo Rol: "+ nuevoRol +" ID Usuario: "+ idUsuario);
+
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin", "1234")) {
+            String sql = "UPDATE usuario SET id_rol = (SELECT id_rol FROM rol WHERE descripcion = ?) WHERE id_usuario = ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, nuevoRol);
+                preparedStatement.setInt(2, idUsuario);
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public List<Map<String, Object>> obtenerReservas() {
 
