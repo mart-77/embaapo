@@ -9,7 +9,7 @@
 
         <label value="Cedula:" />
         <intbox value="@bind(vm.cedula)" />
-        <label value="Fecha de nacimiento en formato (YYYY-DD-MM):" />
+        <label value="Fecha de nacimiento" />
         <datebox value="@bind(vm.nacimiento)" />
 
         <label value="Direccion:" />

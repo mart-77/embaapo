@@ -1,7 +1,5 @@
 package viewmodel;
 
-import java.util.List;
-
 import java.util.*;
 
 import org.zkoss.bind.annotation.Init;
@@ -31,7 +29,19 @@ public class MonedasListViewModel {
         this.monedas = monedas;
     }
 
+public static void main(String[] args) {
+        conexion conncect = new conexion();
+        conncect.crearConexion();
 
+        List<Map<String, Object>> monedas = conncect.obtenerMonedas();
+
+        for (Map<String, Object> moneda : monedas) {
+            System.out.println("ID Diviza: " + moneda.get("id_diviza"));
+            System.out.println("Nombre: " + moneda.get("nombre"));
+            System.out.println("Simbolo: " + moneda.get("simbolo"));
+            System.out.println("------");
+        }
+    }
 
 
 

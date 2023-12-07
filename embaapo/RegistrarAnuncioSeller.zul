@@ -1,0 +1,23 @@
+<zk>
+
+<window id="registroWindow" title="Registro de Usuario" apply="org.zkoss.bind.BindComposer" border="normal"
+    viewModel="@id('vm') @init('viewmodel.RegistroAnuncioSellerViewModel')">
+
+    <vbox align="center" spacing="10px">
+        <label value="Titulo:" />
+        <textbox value="@bind(vm.titulo)" />
+
+        <label value="Descripcion:" />
+        <intbox value="@bind(vm.cedula)" />
+
+        <label value="Tarifa:" />
+        <textbox value="@bind(vm.tarifa)" />
+
+
+        <button label="Registrar" onClick="@command('registrar')" />
+
+
+    </vbox>
+
+</window>
+</zk>

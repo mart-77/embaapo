@@ -10,7 +10,7 @@
         <textbox value="@bind(vm.simbolo)" />
       
 
-        <button label="Actualizar" onClick="@command('agregar')" />
+        <button label="Agregar" onClick="@command('agregar')" />
 
     </vbox>
 </window>

@@ -103,15 +103,13 @@ public class ActualizarCalificacionViewModel {
             try (Connection connection = obtenerConexion()) {
                 // Obtener el id del vendedor con el nombre proporcionado
                 int idSeller = obtenerIdVendedor(connection, nombreSeller);
-                Timestamp timestampInsersion = Timestamp.from(fecha_insersion);
                 Timestamp timestampMod = Timestamp.from(fecha_mod);
                 // Insertar en la tabla calificacion
         String sql = "UPDATE calificacion SET descripcion = ?, fecha_mod = ? WHERE id_seller = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                     preparedStatement.setInt(1, idSeller);
                     preparedStatement.setString(2, descripcion);
-                    preparedStatement.setObject(3, timestampInsersion);
-                    preparedStatement.setObject(4, timestampMod);
+                    preparedStatement.setObject(3, timestampMod);
                     preparedStatement.executeUpdate();
                     return true;
                 }

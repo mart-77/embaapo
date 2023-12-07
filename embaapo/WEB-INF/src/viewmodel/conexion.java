@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.*;
 
 public class conexion {
@@ -138,7 +140,7 @@ public class conexion {
                     while (resultSet.next()) {
                         Map<String, Object> moneda = new HashMap<>();
                         moneda.put("id_diviza", resultSet.getInt("id_diviza"));
-                        moneda.put("nombre", resultSet.getInt("nombre"));
+                        moneda.put("nombre", resultSet.getString("nombre"));
                         moneda.put("simbolo", resultSet.getString("simbolo"));
                         listaMonedas.add(moneda);
                     }
@@ -152,6 +154,12 @@ public class conexion {
 
         return listaMonedas;
     }
+    private String titulo;
+    private String descripcion;
+    private int tarifa;
+    private Instant fecha_insersion = Instant.now();
+    private Instant fecha_mod = Instant.now();
+    private conexion connect;
       public List<Map<String, Object>> obtenerServicios() {
         List<Map<String, Object>> listaServicios = new ArrayList<>();
         System.out.println("Entro en la carga");
@@ -168,7 +176,7 @@ public class conexion {
                         servicio.put("id_servicio", resultSet.getInt("id_servicio"));
                         servicio.put("id_seller", resultSet.getInt("id_seller"));
                         servicio.put("titulo", resultSet.getString("titulo"));
-                        servicio.put("tarifa", resultSet.getString("tarifa"));
+                        servicio.put("tarifa", resultSet.getInt("tarifa"));
                         servicio.put("nombre", resultSet.getString("nombre"));
                         servicio.put("direccion", resultSet.getString("direccion"));
                         servicio.put("oficio", resultSet.getString("oficio"));
@@ -201,7 +209,7 @@ public class conexion {
                         servicio.put("id_servicio", resultSet.getInt("id_servicio"));
                         servicio.put("id_seller", resultSet.getInt("id_seller"));
                         servicio.put("titulo", resultSet.getString("titulo"));
-                        servicio.put("tarifa", resultSet.getString("tarifa"));
+                        servicio.put("tarifa", resultSet.getInt("tarifa"));
                         servicio.put("nombre", resultSet.getString("nombre"));
                         servicio.put("direccion", resultSet.getString("direccion"));
                         servicio.put("oficio", resultSet.getString("oficio"));
@@ -244,7 +252,70 @@ public class conexion {
             System.out.println("No se encontraron resultados para '" + terminoBusqueda + "'.");
         }
     }
+boolean registrarEnBaseDeDatos(String titulo, String descripcion, int tarifa) {
+        System.out.println("Datos ingresados:");
+        System.out.println("titulo: " + titulo);
+        System.out.println("descripcion: " + descripcion);
+        System.out.println("tarifa: " + tarifa);
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres",
+                    "0077");
+            Timestamp timestampInsersion = Timestamp.from(fecha_insersion);
+            Timestamp timestampMod = Timestamp.from(fecha_mod);
+            // Consulta para insertar el nuevo usuario
+            String consulta = "INSERT INTO seller_anuncio (titulo ,descripcion, tarifa,fecha_insersion,fecha_mod) VALUES (?, ?, ?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(consulta)) {
+                preparedStatement.setString(1, titulo);
+                preparedStatement.setString(2, descripcion);
+                preparedStatement.setInt(3, tarifa);
+                preparedStatement.setObject(4, timestampInsersion);
+                preparedStatement.setObject(5, timestampMod);
+                // Ejecutar la inserción
+                int filasAfectadas = preparedStatement.executeUpdate();
+                return filasAfectadas > 0;
+            }
+        } catch (SQLException e) {
+            // Manejo de excepciones (registra o maneja según sea necesario)
+            e.printStackTrace();
+            return false;
+        }
+    }
+    private int id_servicio;
 
+    boolean actualizarAnuncioSeller(int id_servicio, String titulo, String descripcion, int tarifa, Instant instant) {
+        System.out.println("Datos ingresados:");
+        System.out.println("titulo: " + titulo);
+        System.out.println("descripcion: " + descripcion);
+        System.out.println("tarifa: " + tarifa);
+        System.out.println("Fecha de Insersión: " + fecha_mod);
+    
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
+            Timestamp timestampMod = Timestamp.from(fecha_mod);
+    
+            // Convertir java.util.Date a java.sql.Date
+    
+            // Consulta para insertar el nuevo usuario
+            String consulta = "UPDATE seller_anuncio SET titulo = ?, descripcion = ?, tarifa = ?, fecha_mod = ? WHERE id_servicio = ?";
+            
+            try (PreparedStatement preparedStatement = connection.prepareStatement(consulta)) {
+                preparedStatement.setInt(1, id_servicio);
+                preparedStatement.setString(2, titulo);
+                preparedStatement.setString(3, descripcion);
+                preparedStatement.setInt(4, tarifa);
+                preparedStatement.setObject(5, timestampMod);
+    
+                // Ejecutar la inserción
+                int filasAfectadas = preparedStatement.executeUpdate();
+    
+                return filasAfectadas > 0;
+            }
+        } catch (SQLException e) {
+            // Manejo de excepciones (registra o maneja según sea necesario)
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 
   /*   public static void main(String[] args) {

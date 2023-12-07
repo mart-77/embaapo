@@ -6,6 +6,9 @@
         <button label="Dar Roles" href="DarRoles.zul"/>
         <button label="Monedas" href = "Monedas.zul" />
         <button label="Seller" href = "Sellers.zul" />
+        <button label="Seller Anuncios" href = "ServicioList.zul" />
+
+
 
 
 

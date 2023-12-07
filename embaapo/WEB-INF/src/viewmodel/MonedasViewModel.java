@@ -18,7 +18,8 @@ public class MonedasViewModel {
     private String errorMessage;
     private String nombre;
     private String simbolo;
-    private String usuario_mod;
+    private String usuario_mod="admin@example.com";
+    private Instant fecha_insersion = Instant.now();
     private static Instant fecha_mod = Instant.now();
 
     @Init
@@ -105,14 +106,16 @@ public class MonedasViewModel {
 
         try (Connection connection = DriverManager.getConnection(url, usuario, contraseña)) {
             // Preparar la consulta SQL para insertar en la tabla divisas
+            Timestamp timestampInsersion = Timestamp.from(fecha_insersion);
             Timestamp timestampMod = Timestamp.from(fecha_mod);
-            String consulta = "INSERT INTO diviza (nombre, simbolo, usuario_mod, fecha_mod) VALUES (?, ?, ?, ?)";
+            String consulta = "INSERT INTO diviza (nombre, simbolo, usuario_mod, fecha_mod,fecha_insersion) VALUES (?, ?, ?, ?,?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(consulta)) {
                 preparedStatement.setString(1, nombre);
                 preparedStatement.setString(2, simbolo);
                 preparedStatement.setString(3, usuario_mod);
                 preparedStatement.setObject(4, timestampMod);
-                preparedStatement.setInt(5, 1);
+                preparedStatement.setObject(5, timestampInsersion);
+
 
                 // Ejecutar la consulta de inserción
                 preparedStatement.executeUpdate();
@@ -127,6 +130,28 @@ public class MonedasViewModel {
         return false;
 
     }
+    public static void main(String[] args) {
+        // Crear una instancia de la clase que contiene la función a probar
+        MonedasViewModel instancia = new MonedasViewModel();
+
+        // Configurar datos de prueba (ajusta según tus necesidades)
+        instancia.setNombre("Dólar");
+        instancia.setSimbolo("USD");
+        instancia.setUsuario_mod("admin@example.com");
+        instancia.setFecha_insersion(Instant.now());
+        instancia.setFecha_mod(Instant.now());
+
+        // Llamar a la función y almacenar el resultado
+        boolean monedaAgregada = instancia.agregarMoneda();
+
+        // Verificar el resultado
+        if (monedaAgregada) {
+            System.out.println("La moneda se agregó exitosamente.");
+        } else {
+            System.out.println("Error al agregar la moneda.");
+        }
+    }
+
 public boolean eliminarMoneda() {
         // Establecer la conexión a la base de datos (reemplaza con tus propias
         // credenciales y URL)
@@ -189,6 +214,14 @@ public boolean eliminarMoneda() {
     public void setFecha_mod(Instant fecha_mod) {
         this.fecha_mod = fecha_mod;
     }
+    public Instant getFecha_insersion() {
+        return fecha_insersion;
+    }
+    public void setFecha_insersion(Instant fecha_insersion) {
+        this.fecha_insersion = fecha_insersion;
+    }
+
+    
 /* 
      public static void main(String[] args) {
         MonedasViewModel viewModel = new MonedasViewModel();
