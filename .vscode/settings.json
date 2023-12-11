@@ -27,7 +27,8 @@
         "embaapo\\WEB-INF\\lib\\zweb.jar",
         "c:\\Users\\USER\\Downloads\\postgresql-42.7.0.jar",
         "embaapo\\WEB-INF\\lib\\postgresql-42.7.0.jar",
-        "embaapo\\WEB-INF\\lib\\jbcrypt-0.4.jar"
+        "embaapo\\WEB-INF\\lib\\jbcrypt-0.4.jar",
+        "embaapo\\WEB-INF\\lib\\itextpdf-5.1.0.jar"
     ],
     "sqltools.connections": [
         {

@@ -1,0 +1,26 @@
+<window id="AnuncioClienteWindow" title="Anuncios de clientes" border="normal" apply="org.zkoss.bind.BindComposer"
+        viewModel="@id('vm') @init('viewmodel.AnuncioClienteListViewModel')">
+
+<hbox>
+            <textbox id="searchBox" value="@bind(vm.terminoBusqueda)" placeholder="Ingrese el término de búsqueda" />
+            <button label="Buscar" onClick="@command('buscar')" />
+        </hbox>
+
+<grid model="@load(vm.anuncios)" height="300px">
+        <columns>
+            <column label="Nombre"/>
+            <column label="Titulo"/>
+            <column label="Descripcion"/>
+            <column label="Direccion"/>
+        </columns>
+                <template name="model" var="anuncio">
+                    <row>
+                        <label value="@load(anuncio.nombre)"/>
+                        <label value="@load(anuncio.titulo)"/>
+                        <label value="@load(anuncio.descripcion)"/>
+                        <label value="@load(anuncio.direccion)"/>
+                    </row>
+                </template>
+    </grid>
+
+</window>

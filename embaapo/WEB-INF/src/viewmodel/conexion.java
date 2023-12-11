@@ -199,6 +199,73 @@ public boolean validarCredenciales(String email, String password) {
     }
 
 
+     public List<Map<String, Object>> obtenerAnunciosUsuarios() {
+        List<Map<String, Object>> listaAnunciosUsuarios = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin", "1234")) {
+            
+            String sql = "SELECT ac.titulo AS titulo, ac.descripcion AS descripcion, ac.direccion AS direccion , ac.id_usuario AS id_usuario, u.nombre AS nombre " +
+             "FROM anuncio_cliente ac " +
+             "JOIN usuario u ON ac.id_usuario = u.id_usuario";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Map<String, Object> anuncio = new HashMap<>();
+                        anuncio.put("titulo", resultSet.getString("titulo"));
+                        anuncio.put("descripcion", resultSet.getString("descripcion"));
+                        anuncio.put("direccion", resultSet.getString("direccion"));
+                        anuncio.put("id_usuario", resultSet.getInt("id_usuario"));
+                        anuncio.put("nombre", resultSet.getString("nombre"));
+                        listaAnunciosUsuarios.add(anuncio);
+
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listaAnunciosUsuarios;
+    }
+
+
+    public List<Map<String, Object>> buscarAnuncios(String terminoBusqueda) {
+        List<Map<String, Object>> listaAnunciosUsuarios = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin",
+                "1234")) {
+            String sql = " SELECT ac.titulo, ac.descripcion, ac.direccion, ac.id_anuncio_cliente, ac.id_usuario, u.nombre" +
+                    " FROM anuncio_cliente ac " +
+                    " JOIN usuario u ON ac.id_usuario = u.id_usuario " +
+                    " WHERE lower(ac.titulo) LIKE ?"; // Utilizamos LOWER para hacer la búsqueda insensible a mayúsculas
+                                                    //  y minúsculas
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                System.out.println(" Termino Busqueda :" + terminoBusqueda);
+                System.out.println(" preparedStatement  :" + preparedStatement);
+
+                preparedStatement.setString(1, "%" + terminoBusqueda.toLowerCase() + "%"); // Agregamos % para la
+                                                                                           // búsqueda parcial
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Map<String, Object> anuncio = new HashMap<>();
+                        anuncio.put("titulo", resultSet.getString("titulo"));
+                        anuncio.put("descripcion", resultSet.getString("descripcion"));
+                        anuncio.put("direccion", resultSet.getString("direccion"));
+                        anuncio.put("id_usuario", resultSet.getInt("id_usuario"));
+                        anuncio.put("nombre", resultSet.getString("nombre"));
+                        listaAnunciosUsuarios.add(anuncio);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo de excepciones según sea necesario
+        }
+
+        return listaAnunciosUsuarios;
+    }
+
 
     
 }
