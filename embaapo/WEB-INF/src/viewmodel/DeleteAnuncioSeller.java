@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zk.ui.Executions;
 
 public class DeleteAnuncioSeller {
       private conexion connect;
@@ -23,8 +24,10 @@ public class DeleteAnuncioSeller {
 
     @Command
     @NotifyChange({"errorMessage"})
-    public void eliminarSeller() {
+    public void eliminarAnuncioSeller() {
         if (eliminarAnuncioSeller(id_servicio)) {
+                        Executions.sendRedirect("ServicioList.zul");
+
             // Eliminación exitosa, puedes hacer algo después de eliminar si es necesario
             errorMessage = "Seller correctamente eliminado";
         } else {

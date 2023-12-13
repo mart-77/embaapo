@@ -1,17 +1,18 @@
-<window id="inicioWindow" title="Página de Inicio" border="normal"
-    viewModel="@id('vm') @init('viewmodel.MenuAdminViewModel')">
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/ViewModel/Estilo.css"?>
+<zk>
+    <window id="inicioWindow" title="Página de Inicio" border="normal" 
+        viewModel="@id('vm') @init('viewmodel.MenuAdminViewModel')">
 
-    <vbox align="center" spacing="10px">
-        <button label="Log Out" href="Inicio.zul"/>
-        <button label="Dar Roles" href="DarRoles.zul"/>
-        <button label="Monedas" href = "Monedas.zul" />
-        <button label="Seller" href = "Sellers.zul" />
-        <button label="Seller Anuncios" href = "ServicioList.zul" />
+        <vbox align="center" spacing="10px">
+            <button sclass="bn31" label="Log Out" href="Inicio.zul"/>
+            <button sclass="bn31" label="Dar Roles" href="DarRoles.zul"/>
+            <button sclass="bn31" label="Monedas" href="Monedas.zul" />
+            <button sclass="bn31" label="Seller" href="Sellers.zul" />
+            <button sclass="bn31" label="Seller Anuncios" href="ServicioList.zul" />
+              <button label="Generar Informe Excel" onClick="@command('generarInformeExcelADMIN')" />
+         <button label="Generar Informe PDF" onClick="@command('generarInformePDFADMIN')" />
+        </vbox>
 
-
-
-
-
-    </vbox>
-
-</window>
+    </window>
+</zk>

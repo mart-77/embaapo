@@ -1,6 +1,6 @@
 <zk>
     <window apply="org.zkoss.bind.BindComposer"
-            viewModel="@id('vm') @init('viewmodel.CalificacionViewModel')">
+            viewModel="@id('vm') @init('viewmodel.ActualizarCalificacionViewModel')">
         <vbox>
             <label value="Nombre del Seller:" />
             <textbox value="@bind(vm.nombreSeller)" />
@@ -11,7 +11,7 @@
             <label value="Puntuación:" />
             <combobox id="numeroSeleccionadoCombo" model="@load(vm.numeros)" selectedItem="@bind(vm.numeroSeleccionado)" />
             
-            <button label="Calificar" onClick="@command('calificar')" />
+            <button label="Calificar" onClick="@command('actualizarcalificar')" />
         </vbox>
     </window>
 </zk>

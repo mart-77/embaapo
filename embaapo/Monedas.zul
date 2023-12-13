@@ -17,8 +17,8 @@
                     <label value="@load(moneda.nombre)" />
                     <label value="@load(moneda.simbolo)" />
                     <button label="Agregar" href="AgregarMonedas.zul"  />
-                    <button label="Actualizar" href="ActualizarMonedas.zul" /> 
-                    <button label="Eliminar" href="DeleteMonedas.zul" />
+                    <button label="Actualizar" href="ActualizarMoneda.zul" /> 
+                    <button label="Eliminar" href="EliminarMoneda.zul" />
 
                 </row>
             </template>

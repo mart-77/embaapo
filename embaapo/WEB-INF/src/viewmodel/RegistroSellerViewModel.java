@@ -31,7 +31,7 @@ public class RegistroSellerViewModel {
      @NotifyChange({"errorMessage"})
     @Command
     public void registrar() {
-      //  if (!validarDatosUsuario(  nombre,  cedula,  nacimiento,  direccion,  oficio )) {
+       if (!validarDatosUsuario(  nombre,  cedula,  nacimiento,  direccion,  oficio )) {
             if (registrarSeller()) {
                 // Registro exitoso, redirigir a la página de inicio de sesión
                 Executions.sendRedirect("Menu.zul");
@@ -40,13 +40,12 @@ public class RegistroSellerViewModel {
 
                 // Error al registrar en la base de datos, manejar según sea necesario
             }
-    //   }
+       }
     }
 
     public boolean validarDatosUsuario(String nombre, int cedula, Date nacimiento, String direccion, String oficio) {
         // Verificar que todos los campos obligatorios estén presentes y no estén vacíos
         if (nombre == null || nombre.isEmpty() ||
-            //nacimiento == null || nacimiento.isEmpty() ||
             direccion == null || direccion.isEmpty() ||
             oficio == null || oficio.isEmpty()) {
 

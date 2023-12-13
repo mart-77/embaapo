@@ -11,4 +11,31 @@ public class MenuViewModel {
         // Redirigir a la página de inicio de sesión
         Executions.sendRedirect("/inicio.zul");
     }
+
+    @Command
+    public void generarInformePDF() {
+        // Lógica para generar el informe PDF
+        InformePDFGUIusuario informePDF = new InformePDFGUIusuario();
+        informePDF.generarInformePDF();
+    }
+
+    @Command
+    public void generarInformeExcel() {
+        // Lógica para generar el informe Excel
+        InformeEXCELGUIUsuario informeExcel = new InformeEXCELGUIUsuario();
+        informeExcel.generarInformeExcel("Lista Sellers.xls");
+    }
+    @Command
+    public void generarInformePDFADMIN() {
+        // Lógica para generar el informe PDF
+        InformePDFADMIN informePDF = new InformePDFADMIN();
+        informePDF.AdminUsuarioPDF();
+    }
+
+    @Command
+    public void generarInformeExcelADMIN() {
+        // Lógica para generar el informe Excel
+        InformeExcelADMIN informeExcel = new InformeExcelADMIN();
+        informeExcel.generarInformeExcel("Lista Sellers.xls");
+    }
 }

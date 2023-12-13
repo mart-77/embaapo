@@ -41,6 +41,9 @@ public class CalificacionViewModel {
     @NotifyChange({ "errorMessage" })
     @Command
     public void agregarcalificar() {
+       // if(!validarCalificacion(numeroSeleccionadoCombo)){
+
+        
         if (guardarCalificacion()) {
             System.out.println("Calificación guardada con éxito");
             Executions.sendRedirect("Menu.zul");
@@ -48,16 +51,17 @@ public class CalificacionViewModel {
         } else {
             System.out.println("Error al guardar la calificación: " + errorMessage);
         }
-    }
- @Command
-    public void actualizarcalificar() {
-        if (guardarCalificacion()) {
-            System.out.println("Calificación guardada con éxito");
-            Executions.sendRedirect("Menu.zul");
-
-        } else {
-            System.out.println("Error al guardar la calificación: " + errorMessage);
         }
+   // }
+    public boolean validarCalificacion(int numeroSeleccionadoCombo) {
+        // Verificar que la puntuación esté en el rango de 1 a 10
+        if (numeroSeleccionadoCombo < 1 || numeroSeleccionadoCombo > 10) {
+            errorMessage = "La puntuación debe estar en el rango de 1 a 10.";
+            return false;
+        }
+    
+        // La puntuación está en el rango permitido
+        return true;
     }
     public void guardarNumeroSeleccionado() {
         // Validar que numeroSeleccionadoCombo no sea null antes de usarlo

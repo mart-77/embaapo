@@ -29,14 +29,13 @@ public class CalificacionListViewModel {
  @Command
     @NotifyChange({"errorMessage"})
     public void eliminarCalificacion() {
-        if (eliminarSellerEnBaseDeDatos(id_calificacion)) {
+        if (eliminarCalificacionEnBaseDeDatos(id_calificacion)) {
             // Eliminación exitosa, puedes hacer algo después de eliminar si es necesario
         } else {
             errorMessage = "Error al eliminar la calificacion. Verifica el ID ingresado.";
         }
     }
-
-    private static boolean eliminarSellerEnBaseDeDatos(int id_calificacion) {
+    private static boolean eliminarCalificacionEnBaseDeDatos(int id_calificacion) {
         try (Connection connection = obtenerConexion()) {
             String sql = "DELETE FROM calificacion WHERE id_calificacion = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -50,7 +49,21 @@ public class CalificacionListViewModel {
             return false;
         }
     }
+    /* 
+    public static void main(String[] args) {
+        // Simular eliminación de calificación con un ID específico
+        int id_calificacion = 1;
 
+        boolean eliminacionExitosa = eliminarCalificacionEnBaseDeDatos(id_calificacion);
+
+        // Imprimir el resultado de la eliminación
+        if (eliminacionExitosa) {
+            System.out.println("Calificación eliminada exitosamente.");
+        } else {
+            System.out.println("Error al eliminar la calificación.");
+        }
+    }
+/* */
     private static Connection obtenerConexion() throws SQLException {
         return DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
     }
@@ -77,4 +90,5 @@ public class CalificacionListViewModel {
     public void setCalifaciones(List<Map<String, Object>> calificaciones) {
         this.calificaciones = calificaciones;
     }
+  
 }

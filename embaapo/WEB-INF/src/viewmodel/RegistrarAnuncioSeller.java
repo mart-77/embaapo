@@ -1,15 +1,11 @@
 package viewmodel;
+
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
 import java.sql.*;
 import java.time.Instant;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
 
 public class RegistrarAnuncioSeller {
     private String errorMessage;
@@ -22,39 +18,68 @@ public class RegistrarAnuncioSeller {
 
     @Init
     public void initRegistro() {
+        System.out.println("Init ejecutado");
         connect = new conexion();
         connect.crearConexion();
     }
 
     @Command
     @NotifyChange({ "errorMessage" })
-     public void registrar() {
-        // if (!validarDatosRegistro(nombre, apellido, email, telefono, password)) {
-        errorMessage = "Datos de registro no válidos.";
-        if (registrarEnBaseDeDatos()) {
-            // Registro exitoso, redirigir a la página de inicio de sesión
-            Executions.sendRedirect("Login.zul");
-        } else {
-            errorMessage = "Usuario o contraseña incorrectos";
+    public void registrar() {
+        System.out.println("Entro en el registar:");
+        if (!validarDatosRegistro(titulo, descripcion, tarifa)) {
+            errorMessage = "Datos de registro no válidos.";
+            if (registrarEnBaseDeDatos()) {
+                // Registro exitoso, redirigir a la página de inicio de sesión
+                Executions.sendRedirect("ServicioList.zul");
+            } else {
+                errorMessage = "Usuario o contraseña incorrectos";
 
-            // Error al registrar en la base de datos, manejar según sea necesario
+                // Error al registrar en la base de datos, manejar según sea necesario
+            }
         }
-        // }
     }
 
-    
-    private boolean registrarEnBaseDeDatos() {
-        System.out.println("Datos ingresados:");
+    public boolean validarDatosRegistro(String titulo, String descripcion, int tarifa) {
+        System.out.println("Entro en la validacion:");
         System.out.println("titulo: " + titulo);
         System.out.println("descripcion: " + descripcion);
         System.out.println("tarifa: " + tarifa);
+    
+        // Verificar que todos los campos sean obligatorios
+        if (titulo == null || titulo.isEmpty() ||
+            descripcion == null || descripcion.isEmpty()) {
+            System.out.println("Todos los campos son obligatorios.:");
+            errorMessage = "Todos los campos son obligatorios.";
+            return false;
+        }
+    
+        // Verificar que la tarifa esté en el rango de 0 a 500 si se proporciona
+        if (tarifa < 0 || tarifa > 500) {
+            errorMessage = "La tarifa debe estar en el rango de 0 a 500.";
+            System.out.println("La tarifa debe estar en el rango de 0 a 500.:");
+            return false;
+        }
+    
+        // Todos los criterios de validación han pasado
+        return true;
+    }
+    
+
+    private boolean registrarEnBaseDeDatos() {
+
+        System.out.println("Entro en el guardado:");
+        System.out.println("titulo: " + titulo);
+        System.out.println("descripcion: " + descripcion);
+        System.out.println("tarifa: " + tarifa);
+
         try {
             Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres",
                     "0077");
             Timestamp timestampInsersion = Timestamp.from(fecha_insersion);
             Timestamp timestampMod = Timestamp.from(fecha_mod);
             // Consulta para insertar el nuevo usuario
-            String consulta = "INSERT INTO usuario (titulo ,descripcion, tarifa,fecha_insersion,fecha_mod) VALUES (?, ?, ?, ?, ?)";
+            String consulta = "INSERT INTO seller_anuncio (titulo ,descripcion, tarifa,fecha_insersion,fecha_mod) VALUES (?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(consulta)) {
                 preparedStatement.setString(1, titulo);
                 preparedStatement.setString(2, descripcion);
@@ -139,5 +164,32 @@ public class RegistrarAnuncioSeller {
             System.out.println("Error al intentar registrar en la base de datos.");
         }
     }
-
+    /*
+     * public static void main(String[] args) {
+     * validarDatosRegistroTest();
+     * }
+     * 
+     * public static void validarDatosRegistroTest() {
+     * // Caso 1: Todos los campos proporcionados correctamente
+     * boolean resultadoCaso1 = validarDatosRegistro("Título", "Descripción", 100);
+     * System.out.println("Caso 1: " + (resultadoCaso1 ? "Éxito" : errorMessage));
+     * 
+     * // Caso 2: Tarifa fuera del rango
+     * boolean resultadoCaso2 = validarDatosRegistro("Título", "Descripción", 600);
+     * System.out.println("Caso 2: " + (resultadoCaso2 ? "Éxito" : errorMessage));
+     * 
+     * // Caso 3: Título nulo
+     * boolean resultadoCaso3 = validarDatosRegistro(null, "Descripción", 200);
+     * System.out.println("Caso 3: " + (resultadoCaso3 ? "Éxito" : errorMessage));
+     * 
+     * // Caso 4: Descripción vacía
+     * boolean resultadoCaso4 = validarDatosRegistro("Título", "", 300);
+     * System.out.println("Caso 4: " + (resultadoCaso4 ? "Éxito" : errorMessage));
+     * 
+     * // Caso 5: Todos los campos nulos
+     * boolean resultadoCaso5 = validarDatosRegistro(null, null, null);
+     * System.out.println("Caso 5: " + (resultadoCaso5 ? "Éxito" : errorMessage));
+     * }
+     * /*
+     */
 }
