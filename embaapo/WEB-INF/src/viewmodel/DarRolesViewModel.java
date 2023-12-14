@@ -19,8 +19,9 @@ public class DarRolesViewModel {
         System.out.println("Init method called!");
         connect = new conexion();
         connect.crearConexion();
-        usuarios = connect.obtenerUsuarios();
-        roles = connect.obtenerRoles();
+
+     //   usuarios = connect.obtenerUsuarios();
+       // roles = connect.obtenerRoles();
         System.out.println("\n\n\n\n\n\n\n Roles: " + roles.size());
        
         // Verificar que la lista de usuarios se haya llenado correctamente
@@ -38,10 +39,11 @@ public class DarRolesViewModel {
         int idUsuario = (int) usuario.get("id_usuario");
 
         System.out.println("Nuevo Rol: "+ nuevoRol +" ID Usuario: "+ idUsuario);
-
+/* 
         connect.actualizarRolUsuario(usuario);
         usuarios = connect.obtenerUsuarios();   
         roles = connect.obtenerRoles(); // Actualizar la lista de usuarios después de cambiar el rol
+        /* */
     }
 
 
@@ -71,7 +73,7 @@ public class DarRolesViewModel {
 
 
 
-
+/* 
     public static void main(String[] args) {
         conexion conncect = new conexion();
         conncect.crearConexion();
@@ -86,4 +88,5 @@ public class DarRolesViewModel {
             System.out.println("------");
         }
     }
+    /* */
 }
