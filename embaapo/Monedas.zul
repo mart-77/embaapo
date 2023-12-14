@@ -1,17 +1,27 @@
 <zk>
+    <window title="Lista de Monedas" border="normal" apply="org.zkoss.bind.BindComposer"  
+    viewModel="@id('vm') @init('viewmodel.MonedasListViewModel')">
+        <grid model="@load(vm.monedas)"  height="300px">
+            <columns>
+                <column label="ID Moneda" />
+                <column label="Nombre" />
+                <column label="Simbolo" />
+                <column label="Agregar" />
+                <column label="Actualizar " />
+                <column label="Eliminar" />
 
+            </columns>
+            <template name="model" var="moneda">
+                <row>
+                    <label value="@load(moneda.id_diviza)" />
+                    <label value="@load(moneda.nombre)" />
+                    <label value="@load(moneda.simbolo)" />
+                    <button label="Agregar" href="AgregarMonedas.zul"  />
+                    <button label="Actualizar" href="ActualizarMoneda.zul" /> 
+                    <button label="Eliminar" href="EliminarMoneda.zul" />
 
-<window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('viewmodel.MonedasViewModel')" title="Formulario de Monedas" border="normal">
-    <vbox>
-        <label value="Nombre de la Moneda:" />
-        <textbox value="@bind(vm.nombre)" />
-
-        <label value="Símbolo de la Moneda:" />
-        <textbox value="@bind(vm.simbolo)" />
-        <label value="Usuario que lo modifico" />
-        <textbox value="@bind(vm.usuario_mod)" />
-
-        <button label="Guardar" onClick="@command('moneda')" />
-    </vbox>
-</window>
+                </row>
+            </template>
+        </grid>
+    </window>
 </zk>

@@ -1,13 +1,21 @@
-<window id="inicioWindow" title="Página de Inicio" border="normal"
+<zk>
+<window id="inicioWindow" title="Página de Inicio" border="normal" apply="org.zkoss.bind.BindComposer"
     viewModel="@id('vm') @init('viewmodel.MenuViewModel')">
 
     <vbox align="center" spacing="10px">
         <button label="Log Out" href="Inicio.zul"/>
-        <button label="Calificar" href = "Calificar.zul" />
+        <button label="Calificar" href = "Calificacion.zul" />
         <button label="Quiero ser seller" href = "RegistrarSeller.zul" />
+        <button label="Generar Informe Excel" onClick="@command('generarInformeExcel')" />
+         <button label="Generar Informe PDF" onClick="@command('generarInformePDF')" />
+
+
+         <!-- <label  value="@bind(vm.errorMessage)" style="color: blue;" /> -->
+
 
 
 
     </vbox>
 
 </window>
+</zk>
