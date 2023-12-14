@@ -11,14 +11,12 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Comboitem;
 
-
 public class ActualizarCalificacionViewModel {
     private conexion connect;
     private String errorMessage;
     String nombreSeller;
     String descripcion;
-    private Integer numeroSeleccionado;
-    private Combobox numeroSeleccionadoCombo;
+    private int calificacion;
     String nombre;
     private Instant fecha_insersion = Instant.now();
     private Instant fecha_mod = Instant.now();
@@ -37,7 +35,7 @@ public class ActualizarCalificacionViewModel {
         connect.crearConexion();
     }
 
- @Command
+    @Command
     public void actualizarcalificar() {
         if (actualizarCalificacion()) {
             System.out.println("Calificación guardada con éxito");
@@ -45,36 +43,6 @@ public class ActualizarCalificacionViewModel {
 
         } else {
             System.out.println("Error al guardar la calificación: " + errorMessage);
-        }
-    }
-    public void guardarNumeroSeleccionado() {
-        // Validar que numeroSeleccionadoCombo no sea null antes de usarlo
-        if (numeroSeleccionadoCombo != null) {
-            Comboitem selectedItem = numeroSeleccionadoCombo.getSelectedItem();
-            if (selectedItem != null) {
-                numeroSeleccionado = Integer.parseInt(selectedItem.getLabel());
-
-                // Llamar a un método para guardar en la base de datos
-                guardarEnBaseDeDatos(numeroSeleccionado);
-                // Asignar el valor a numeroSeleccionado después de convertirlo a int
-                // Aquí puedes realizar otras acciones después de guardar en la base de datos
-            }
-            System.out.println(numeroSeleccionado);
-        } else {
-            System.out.println("numeroSeleccionadoCombo es null");
-        }
-    }
-
-    private void guardarEnBaseDeDatos(Integer numeroSeleccionado) {
-        try (Connection connection = obtenerConexion()) {
-            String sql = "INSERT INTO calificacion (puntacion) VALUES (?)";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setInt(1, numeroSeleccionado);
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            errorMessage = "Error de base de datos al guardar el número seleccionado: " + e.getMessage();
         }
     }
 
@@ -99,17 +67,16 @@ public class ActualizarCalificacionViewModel {
 
     public boolean actualizarCalificacion() {
         if (nombreSeller != null && descripcion != null) {
-            guardarNumeroSeleccionado();
             try (Connection connection = obtenerConexion()) {
                 // Obtener el id del vendedor con el nombre proporcionado
                 int idSeller = obtenerIdVendedor(connection, nombreSeller);
                 Timestamp timestampMod = Timestamp.from(fecha_mod);
                 // Insertar en la tabla calificacion
-        String sql = "UPDATE calificacion SET descripcion = ?, fecha_mod = ? WHERE id_seller = ?";
+                String sql = "UPDATE calificacion SET descripcion = ?, puntuacion=? WHERE id_seller = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                    preparedStatement.setInt(1, idSeller);
-                    preparedStatement.setString(2, descripcion);
-                    preparedStatement.setObject(3, timestampMod);
+                    preparedStatement.setString(1, descripcion);
+                    preparedStatement.setInt(2, calificacion);
+                    preparedStatement.setInt(3, idSeller);
                     preparedStatement.executeUpdate();
                     return true;
                 }
@@ -138,10 +105,6 @@ public class ActualizarCalificacionViewModel {
         throw new SQLException("No se encontró el vendedor con nombre '" + nombreSeller + "'");
     }
 
-    
-     
-     
-
     private Connection obtenerConexion() throws SQLException {
         String url = "jdbc:postgresql://localhost:5432/tp";
         String usuario = "postgres";
@@ -165,23 +128,15 @@ public class ActualizarCalificacionViewModel {
         this.descripcion = descripcion;
     }
 
-    public Integer getNumeroSeleccionado() {
-        return numeroSeleccionado;
+    public int getCalificacion() {
+        return calificacion;
     }
 
-    public void setNumeroSeleccionado(Integer numeroSeleccionado) {
-        this.numeroSeleccionado = numeroSeleccionado;
+    public void setCalificacion(int calificacion) {
+        this.calificacion = calificacion;
     }
 
     // Getter y setter para NumeroSeleccionadoCombo
-
-    public Combobox getNumeroSeleccionadoCombo() {
-        return numeroSeleccionadoCombo;
-    }
-
-    public void setNumeroSeleccionadoCombo(Combobox numeroSeleccionadoCombo) {
-        this.numeroSeleccionadoCombo = numeroSeleccionadoCombo;
-    }
 
     public String getNombre() {
         return nombre;
@@ -215,94 +170,53 @@ public class ActualizarCalificacionViewModel {
         this.fecha_mod = fecha_mod;
     }
 
-    /*
-     * public static void main(String[] args) {
-     * // Crear instancia de CalificacionViewModel
-     * CalificacionViewModel viewModel = new CalificacionViewModel();
-     * 
-     * // Llamar a obtenerNombresSellers y mostrar el resultado
-     * List<String> nombres = viewModel.obtenerNombresSellers();
-     * 
-     * if (nombres != null) {
-     * System.out.println("Nombres de Sellers:");
-     * for (String nombre : nombres) {
-     * System.out.println(nombre);
-     * }
-     * } else {
-     * System.out.println("Error al obtener los nombres de Sellers.");
-     * }
-     * }/*
-     */
-    /*
-     * public static void main(String[] args) {
-     * // Crear instancia de CalificacionViewModel
-     * CalificacionViewModel viewModel = new CalificacionViewModel();
-     * 
-     * // Configurar datos de prueba (ajusta según tus necesidades)
-     * viewModel.setNombre("NombreDeSeller");
-     * 
-     * // Llamar a obtenerIdSellerPorNombre y mostrar el resultado
-     * int idSeller = CalificacionViewModel.obtenerIdSellerPorNombre();
-     * 
-     * if (idSeller != -1) {
-     * System.out.println("El ID del seller es: " + idSeller);
-     * } else {
-     * System.out.println("No se encontró un seller con ese nombre.");
-     * System.out.println("Mensaje de error: " + viewModel.getErrorMessage());
-     * }
-     * }
-     * private String getErrorMessage() {
-     * return null;
-     * }
-     * 
-     * /* public static void main(String[] args) {
-     * // Solicitar datos al usuario
-     * Scanner scanner = new Scanner(System.in);
-     * System.out.println("Ingrese su nombre: ");
-     * nombre = scanner.next();
-     * System.out.println("Ingrese su apellido: ");
-     * apellido = scanner.next();
-     * System.out.println("Ingrese su email: ");
-     * email = scanner.next();
-     * System.out.println("Ingrese su telefono: ");
-     * telefono = scanner.next();
-     * System.out.println("Ingrese su pasword: ");
-     * password = scanner.next();
-     * 
-     * 
-     * 
-     * // Ejecutar la autenticación
-     * if (registrarEnBaseDeDatos()) {
-     * System.out.println("Se creo en la base de datos");
-     * } else {
-     * System.out.
-     * println("No se creo en la base de datos.Por favor, inténtalo de nuevo.");
-     * }
-     * }/*
-     */
+    public static void main(String[] args) {
+        realizarPruebas();
+    }
 
-    /*
-     * public static void main(String[] args) {
-     * // Crear instancia de CalificacionViewModel
-     * CalificacionViewModel viewModel = new CalificacionViewModel();
-     * 
-     * // Configurar datos de prueba (ajusta según tus necesidades)
-     * viewModel.setNombre("NombreDeSeller");
-     * viewModel.setDescripcion("Buena atención");
-     * viewModel.setPuntuacion(5);
-     * 
-     * // Llamar a guardarCalificacion y mostrar el resultado
-     * boolean calificacionGuardada = viewModel.guardarCalificacion();
-     * 
-     * if (calificacionGuardada) {
-     * System.out.println("La calificación se guardó exitosamente.");
-     * } else {
-     * System.out.println("Error al guardar la calificación.");
-     * System.out.println("Mensaje de error: " + viewModel.getErrorMessage());
-     * }
-     * }
-     * private String getErrorMessage() {
-     * return errorMessage;
-     * }/*
-     */
+    public static void realizarPruebas() {
+        pruebaActualizarCalificacionExitoso();
+        pruebaObtenerIdVendedorExitoso();
+        pruebaObtenerIdVendedorConNombreInexistente();
+        // Puedes agregar más llamadas a métodos de prueba según sea necesario.
+    }
+
+    public static void pruebaActualizarCalificacionExitoso() {
+        ActualizarCalificacionViewModel tuClase = new ActualizarCalificacionViewModel();  // Asegúrate de reemplazar TuClase con el nombre real de tu clase
+        tuClase.setNombreSeller("Gonzalo");
+        tuClase.setDescripcion("Nueva descripción de prueba");
+        tuClase.setCalificacion(4);  // Nueva calificación
+
+        // Prueba de la función actualizarCalificacion()
+        System.out.println(tuClase.actualizarCalificacion());
+        // Puedes agregar más verificaciones según sea necesario para validar el estado esperado después de actualizar la calificación.
+    }
+
+    public static void pruebaObtenerIdVendedorExitoso() {
+        ActualizarCalificacionViewModel tuClase = new ActualizarCalificacionViewModel();  // Asegúrate de reemplazar TuClase con el nombre real de tu clase
+
+        try (Connection connection = tuClase.obtenerConexion()) {
+            // Configuración de datos de prueba si es necesario
+            int idVendedor = tuClase.obtenerIdVendedor(connection, "Gonzalo");
+
+            // Puedes agregar más verificaciones según sea necesario.
+            System.out.println("ID del vendedor: " + idVendedor);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void pruebaObtenerIdVendedorConNombreInexistente() {
+        ActualizarCalificacionViewModel tuClase = new ActualizarCalificacionViewModel();  // Asegúrate de reemplazar TuClase con el nombre real de tu clase
+
+        try (Connection connection = tuClase.obtenerConexion()) {
+            // Intentar obtener el ID de un vendedor con un nombre inexistente
+            int idVendedor = tuClase.obtenerIdVendedor(connection, "Gonzalo");
+
+            // Verificar que se obtenga un valor negativo o 0 (dependiendo de tu lógica de negocio)
+            System.out.println("ID del vendedor (con nombre inexistente): " + idVendedor);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

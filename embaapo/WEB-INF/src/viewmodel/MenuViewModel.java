@@ -27,6 +27,7 @@ public class MenuViewModel {
     }
     @Command
     public void generarInformePDFADMIN() {
+        System.out.print("Boton de generar informe PDF presionado");
         // Lógica para generar el informe PDF
         InformePDFADMIN informePDF = new InformePDFADMIN();
         informePDF.AdminUsuarioPDF();
@@ -35,7 +36,8 @@ public class MenuViewModel {
     @Command
     public void generarInformeExcelADMIN() {
         // Lógica para generar el informe Excel
+        System.out.print("Boton de generar informe Excel presionado");
         InformeExcelADMIN informeExcel = new InformeExcelADMIN();
-        informeExcel.generarInformeExcel("Lista Sellers.xls");
+        informeExcel.generarInformeExcel("Lista Usuarios.xls");
     }
 }

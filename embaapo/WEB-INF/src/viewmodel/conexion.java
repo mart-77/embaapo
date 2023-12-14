@@ -182,7 +182,7 @@ public class conexion {
 
     public List<Map<String, Object>> obtenerServicios() {
         List<Map<String, Object>> listaServicios = new ArrayList<>();
-        System.out.println("Entro en la carga");
+        //System.out.println("Entro en la carga");
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres",
                 "0077");) {
             String sql = " SELECT sa.id_servicio, sa.titulo, sa.tarifa," +
@@ -208,7 +208,7 @@ public class conexion {
             e.printStackTrace();
             // Manejo de excepciones según sea necesario
         }
-        System.out.println("Salio en la carga");
+       // System.out.println("Salio en la carga");
 
         return listaServicios;
     }
@@ -315,40 +315,7 @@ public class conexion {
 
         return listaAnunciosUsuarios;
     }
-    /*
-     * public static void main(String[] args) {
-     * // Crear una instancia de conexión
-     * conexion connect = new conexion();
-     * 
-     * // Término de búsqueda para la prueba
-     * String terminoBusqueda = "Servicio Ejemplo"; // Reemplaza con el término que
-     * deseas buscar
-     * 
-     * // Llamar a la función de búsqueda
-     * List<Map<String, Object>> resultados =
-     * connect.buscarServicios(terminoBusqueda);
-     * 
-     * // Imprimir los resultados
-     * if (!resultados.isEmpty()) {
-     * System.out.println("Resultados de la búsqueda para '" + terminoBusqueda +
-     * "':");
-     * for (Map<String, Object> servicio : resultados) {
-     * System.out.println("ID Servicio: " + servicio.get("id_servicio"));
-     * System.out.println("ID Seller: " + servicio.get("id_seller"));
-     * System.out.println("Título: " + servicio.get("titulo"));
-     * System.out.println("Tarifa: " + servicio.get("tarifa"));
-     * System.out.println("Nombre: " + servicio.get("nombre"));
-     * System.out.println("Dirección: " + servicio.get("direccion"));
-     * System.out.println("Oficio: " + servicio.get("oficio"));
-     * System.out.println("------");
-     * }
-     * } else {
-     * System.out.println("No se encontraron resultados para '" + terminoBusqueda +
-     * "'.");
-     * }
-     * }
-     * /*
-     */
+
     boolean registrarEnBaseDeDatos(String titulo, String descripcion, int tarifa) {
         System.out.println("Datos ingresados:");
         System.out.println("titulo: " + titulo);
@@ -431,33 +398,5 @@ public class conexion {
         }
     }
     
-    /*
-     * public static void main(String[] args) {
-     * testValidarCredenciales();
-     * }
-     * 
-     * private static void testValidarCredenciales() {
-     * conexion connect = new conexion(); // Asegúrate de que estás utilizando la
-     * misma clase que contiene
-     * // validarCredenciales
-     * 
-     * // Prueba credenciales válidas
-     * boolean resultadoValido = connect.validarCredenciales("admin@example.com",
-     * "0077");
-     * if (resultadoValido) {
-     * System.out.println("Credenciales válidas");
-     * } else {
-     * System.out.println("Credenciales inválidas");
-     * }
-     * 
-     * // Prueba credenciales inválidas
-     * boolean resultadoInvalido =
-     * connect.validarCredenciales("usuario@example.com", "otra_contraseña");
-     * if (!resultadoInvalido) {
-     * System.out.println("Credenciales inválidas");
-     * } else {
-     * System.out.println("Credenciales válidas");
-     * }
-     * }/*
-     */
+
 }

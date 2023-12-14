@@ -9,9 +9,9 @@
             <textbox rows="3" cols="30" value="@bind(vm.descripcion)" />
             
             <label value="Puntuación:" />
-            <combobox id="numeroSeleccionadoCombo" model="@load(vm.numeros)" selectedItem="@bind(vm.numeroSeleccionado)" />
+            <intbox value="@bing(vm.calificacion)" />
             
-            <button label="Calificar" onClick="@command('calificar')" />
+            <button label="Calificar" onClick="@command('agregarcalificar')" />
         </vbox>
     </window>
 </zk>

@@ -27,8 +27,8 @@ public class RegistrarAnuncioSeller {
     @NotifyChange({ "errorMessage" })
     public void registrar() {
         System.out.println("Entro en el registar:");
-        if (!validarDatosRegistro(titulo, descripcion, tarifa)) {
-            errorMessage = "Datos de registro no válidos.";
+     //   if (!validarDatosRegistro(titulo, descripcion, tarifa)) {
+          //  errorMessage = "Datos de registro no válidos.";
             if (registrarEnBaseDeDatos()) {
                 // Registro exitoso, redirigir a la página de inicio de sesión
                 Executions.sendRedirect("ServicioList.zul");
@@ -37,7 +37,7 @@ public class RegistrarAnuncioSeller {
 
                 // Error al registrar en la base de datos, manejar según sea necesario
             }
-        }
+       // }
     }
 
     public boolean validarDatosRegistro(String titulo, String descripcion, int tarifa) {
