@@ -1,7 +1,7 @@
 <zk>
 
 <window id="registroWindow" title="Registro de Usuario" apply="org.zkoss.bind.BindComposer" border="normal"
-    viewModel="@id('vm') @init('viewmodel.RegistroViewModel')">
+    viewModel="@id('vm') @init('viewmodel.RegistroViewModel')" >
 
     <vbox align="center" spacing="10px">
         <label value="Nombre:" />

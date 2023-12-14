@@ -40,7 +40,7 @@ public class SellertListViewModel {
     }
 
     private Connection obtenerConexion() throws SQLException {
-        return DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
+        return DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin", "1234");
     }
    // Método para cargar los sellers desde la base de datos
    private List<Seller> cargarSellersDesdeBaseDeDatos() {   

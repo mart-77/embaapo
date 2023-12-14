@@ -127,6 +127,7 @@ public class RegistroViewModel {
         try {
             Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin",
                     "1234");
+                    
             Timestamp timestampInsersion = Timestamp.from(fecha_insersion);
             Timestamp timestampMod = Timestamp.from(fecha_mod);
 

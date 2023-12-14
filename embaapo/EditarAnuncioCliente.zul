@@ -1,0 +1,27 @@
+<zk>
+
+<window id="actualizarAnuncioClienteWindow" title="Actualizacion de Anuncio de Cliente" apply="org.zkoss.bind.BindComposer" border="normal"
+    viewModel="@id('vm') @init('viewmodel.EditarACViewModel')">
+
+    <vbox align="center" spacing="10px">
+
+        <label value="ID: "/>
+        <textbox value="@bind(vm.id_anuncio_cliente)"/>
+
+        <label value="Titulo:" />
+        <textbox value="@bind(vm.titulo)" />
+
+        <label value="Descripcion:"/>
+        <textbox value="@bind(vm.descripcion)" />
+
+        <label value="Direccion" />
+        <textbox value="@bind(vm.direccion)" />
+
+        <button label="Actualizar" onClick="@command('actualizarAnuncioCliente')" />
+
+        <label id="errorMessage" value="@bind(vm.errorMessage)" style="color: red;" />
+
+    </vbox>
+
+</window>
+</zk>
