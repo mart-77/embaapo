@@ -17,16 +17,15 @@ import java.time.Instant;
 import java.util.Scanner;
 
 public class RegistroViewModel {
-    private  String errorMessage;
-    private static  String nombre;
-    private static  String apellido;
-    private static  String email;
-    private static  String telefono;
-    private static  String password;
-    private static  Instant fecha_insersion = Instant.now();
-    private static  Instant fecha_mod = Instant.now();
+    private String errorMessage;
+    private static String nombre;
+    private static String apellido;
+    private static String email;
+    private static String telefono;
+    private static String password;
+    private static Instant fecha_insersion = Instant.now();
+    private static Instant fecha_mod = Instant.now();
     private conexion connect;
-    
 
     @Init
     public void initRegistro() {
@@ -50,8 +49,6 @@ public class RegistroViewModel {
         }
     }
 
-    
-
     public boolean validarDatosRegistro(String nombre, String apellido, String email, String telefono,
             String password) {
         // Verificar que todos los campos sean obligatorios
@@ -68,7 +65,7 @@ public class RegistroViewModel {
             errorMessage = "Formato de correo electrónico no válido.";
             return false;
         }
-    
+
         // Verificar si el correo ya existe en la base de datos
         if (verificarEmailExistente(email)) {
             errorMessage = "Este correo ya está registrado.";
@@ -118,20 +115,21 @@ public class RegistroViewModel {
         return false; // En caso de error, consideramos que el email no existe
     }
 
-    private static  boolean registrarEnBaseDeDatos() {
+    private static boolean registrarEnBaseDeDatos() {
 
-        
-         System.out.println("Datos ingresados:");
-          System.out.println("Nombre: " + nombre);
-          System.out.println("Apelliod: " + apellido);
-          System.out.println("Email: " + email);
-          System.out.println("Password: " + password);
-          System.out.println("Telfono: " + telefono);
-         
+        System.out.println("Datos ingresados:");
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Apelliod: " + apellido);
+        System.out.println("Email: " + email);
+        System.out.println("Password: " + password);
+        System.out.println("Telfono: " + telefono);
+
         try {
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres","0077");
-                    Timestamp timestampInsersion = Timestamp.from(fecha_insersion);
-                    Timestamp timestampMod = Timestamp.from(fecha_mod);
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin",
+                    "1234");
+                    
+            Timestamp timestampInsersion = Timestamp.from(fecha_insersion);
+            Timestamp timestampMod = Timestamp.from(fecha_mod);
 
             // Consulta para insertar el nuevo usuario
             String consulta = "INSERT INTO usuario (id_rol ,nombre, apellido, email, telefono, password,  fecha_insersion,fecha_mod) VALUES (?, ?, ?, ?, ?,?,?,?)";
@@ -144,7 +142,6 @@ public class RegistroViewModel {
                 preparedStatement.setString(6, password);
                 preparedStatement.setObject(7, timestampInsersion);
                 preparedStatement.setObject(8, timestampMod);
-            
 
                 // Ejecutar la inserción
                 int filasAfectadas = preparedStatement.executeUpdate();
@@ -174,32 +171,27 @@ public class RegistroViewModel {
         return fecha_mod;
     }
 
-    
-      public static void main(String[] args) {
-      // Solicitar datos al usuario
-      Scanner scanner = new Scanner(System.in);
-      System.out.println("Ingrese su nombre: ");
-      nombre = scanner.next();
-      System.out.println("Ingrese su apellido: ");
-      apellido = scanner.next();
-      System.out.println("Ingrese su email: ");
-      email = scanner.next();
-      System.out.println("Ingrese su telefono: ");
-      telefono = scanner.next();
-      System.out.println("Ingrese su pasword: ");
-      password = scanner.next();
-      
-      
-      
- // Ejecutar la autenticación
-     if (registrarEnBaseDeDatos()) {
-      System.out.println("Se creo en la base de datos");
-      } else {
-      System.out.
-      println("No se creo en la base de datos.Por favor, inténtalo de nuevo.");
-     }
-      }
-     
+    public static void main(String[] args) {
+        // Solicitar datos al usuario
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Ingrese su nombre: ");
+        nombre = scanner.next();
+        System.out.println("Ingrese su apellido: ");
+        apellido = scanner.next();
+        System.out.println("Ingrese su email: ");
+        email = scanner.next();
+        System.out.println("Ingrese su telefono: ");
+        telefono = scanner.next();
+        System.out.println("Ingrese su pasword: ");
+        password = scanner.next();
+        // Ejecutar la autenticación
+        if (registrarEnBaseDeDatos()) {
+            System.out.println("Se creo en la base de datos");
+        } else {
+            System.out.println("No se creo en la base de datos.Por favor, inténtalo de nuevo.");
+        }
+    }
+
     public String getEmail() {
         return email;
     }
@@ -240,7 +232,6 @@ public class RegistroViewModel {
         this.telefono = telefono;
     }
 
-    
     public String getErrorMessage() {
         return errorMessage;
     }
@@ -248,6 +239,5 @@ public class RegistroViewModel {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
-
 
 }
