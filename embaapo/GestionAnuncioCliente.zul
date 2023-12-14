@@ -1,0 +1,41 @@
+<window id="GestionAnuncioClienteWindow" title="Gestion de Anuncio" border="normal" apply="org.zkoss.bind.BindComposer"
+        viewModel="@id('vm') @init('viewmodel.GestionACViewModel')">
+
+
+    <grid model="@load(vm.anuncios)" height="760px">
+        <columns>
+            <column label="ID"/>
+            <column label="Nombre"/>
+            <column label="Titulo"/>
+            <column label="Descripcion"/>
+            <column label="Direccion"/>
+            <column label="Estado"/>
+        </columns>
+                <template name="model" var="anuncio">
+                    <row>
+                        <label value="@load(anuncio.id_anuncio_cliente)"/>
+                        <label value="@load(anuncio.nombre)"/>
+                        <label value="@load(anuncio.titulo)"/>
+                        <label value="@load(anuncio.descripcion)"/>
+                        <label value="@load(anuncio.direccion)"/>
+                        <cell>
+                        <combobox model="@load(vm.estados)" 
+                        value="@load(anuncio.descripcion_estado)"
+                        selectedItem="@bind(anuncio.descripcion_estado)">
+                        <template name="model">
+                            <comboitem label="@load(each)"/>
+                        </template> 
+                        
+                        </combobox> 
+                        <button label="Aceptar" onClick="@command('actualizarEstadoAnuncio', dato=anuncio)"/>
+                        
+                        </cell> 
+                    </row>
+                </template>
+    </grid>
+
+    <button label="Agregar" onClick="@command('agregarAnuncio')" />
+    <button label="Eliminar" onClick="@command('eliminarAnuncio')"/>
+    <button label="Editar" onClick="@command('actualizarAnuncio')"/>    
+
+</window>
