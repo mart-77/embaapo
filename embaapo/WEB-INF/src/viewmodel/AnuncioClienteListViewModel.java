@@ -3,11 +3,9 @@ package viewmodel;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.*;
 import java.util.*;
-import org.zkoss.zk.ui.Executions;
-
 
 public class AnuncioClienteListViewModel {
-
+    
     private conexion connect;
     private List<Map<String, Object>> anuncios;
     private String terminoBusqueda = "";

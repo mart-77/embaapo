@@ -1,0 +1,29 @@
+<zk>
+    <window title="Lista de Sellers" border="normal" apply="org.zkoss.bind.BindComposer"  
+    viewModel="@id('vm') @init('viewmodel.CalificacionListViewModel')">
+        <grid model="@load(vm.calificaciones)"  height="300px">
+            <columns>
+                <column label="ID Calificacion" />
+                <column label="ID Seller" />
+                <column label="Descripcion" />
+                <column label="Puntuacion" />
+                <column label="Agregar" />
+                <column label="Actualizar " />
+                <column label="Eliminar" />
+
+            </columns>
+            <template name="model" var="seller">
+                <row>
+                    <label value="@load(calificacion.id_calificacion)" />
+                    <label value="@load(calificacion.id_seller)" />
+                    <label value="@load(calificacion.descripcion)" />
+                    <label value="@load(calificacion.puntuacion)" />
+                    <button label="Agregar" href="AgregarCalificar.zul"  />
+                    <button label="Actualizar" href="ActualizarCalificacion.zul" /> 
+                    <button label="Eliminar" href="DeleteCalificacion.zul" />
+
+                </row>
+            </template>
+        </grid>
+    </window>
+</zk>

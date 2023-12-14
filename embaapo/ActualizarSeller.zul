@@ -1,0 +1,28 @@
+<zk>
+
+<window id="registroWindow" title="Registro de Usuario" apply="org.zkoss.bind.BindComposer" border="normal"
+    viewModel="@id('vm') @init('viewmodel.SellerListViewModel')">
+
+    <vbox align="center" spacing="10px">
+        <label value="Nombre:" />
+        <textbox value="@bind(vm.nombre)" />
+
+        <label value="Cedula:" />
+        <intbox value="@bind(vm.cedula)" />
+        <label value="Fecha de nacimiento en formato (YYYY-DD-MM):" />
+        <datebox value="@bind(vm.nacimiento)" />
+
+        <label value="Direccion:" />
+        <textbox  value="@bind(vm.direccion)" />
+
+        <label value="Oficio:" />
+        <textbox value="@bind(vm.oficio)" />
+
+
+        <button label="Registrar" onClick="@command('actualizar')" />
+
+
+    </vbox>
+
+</window>
+</zk>

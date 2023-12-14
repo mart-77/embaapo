@@ -1,10 +1,48 @@
-<window id="inicioWindow" title="Página de Inicio" border="normal"
-    viewModel="@id('vm') @init('viewmodel.InicioViewModel')">
+<zk xmlns:h="http://www.w3.org/1999/xhtml" id="loginWindow" title="Login" border="normal" apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('viewmodel.LoginViewModel')">
+    <h:div style="width: 100%; height: 100%; position: relative; background: white">
+        <h:img style="width: 314px; height: 268px; left: 322px; top: 36px; position: absolute" src="https://via.placeholder.com/314x268" />
+        <h:div style="width: 674.89px; height: 348px; left: 136px; top: 521px; position: absolute">
+            <h:button onClick="@command('login')"  style="width: 405px; height: 30px; padding-top: 16px; padding-bottom: 19px; padding-left: 32px; padding-right: 32px; left: 135px; top: 150px; position: absolute; background: #4477AA; box-shadow: 0px 3px 12px rgba(255, 153, 0, 0.18); border-radius: 56px; justify-content: center; align-items: center; gap: 8px; display: inline-flex">
+                <h:div style="text-align: center; color: white; font-size: 18px; font-family: Red Hat Display; font-weight: 600; line-height: 20px; letter-spacing: 2.70px; word-wrap: break-word">Iniciar Sesón </h:div>
+            </h:button>
+            <h:div style="width: 674.89px; height: 93.05px; left: 0px; top: -100px; position: absolute">
+                <textbox style="width: 674.89px; height: 93.05px; left: 0px; top: 0px; position: absolute; padding-left:40px ; background: white; box-shadow: 0px 8px 16px rgba(13.04, 10.35, 43.56, 0.05);border-radius: 60px;  border: 1px #EFF0F6 solid : opacity: 0.20; color: #221F1F; font-size: 18px; font-family: Red Hat Display;font-weight: 500; line-height: 27px; word-wrap: break-word" placeholder="Introduzca su email"/>
+            </h:div>
+            <h:div style="width: 674.89px; height: 93.05px; left: 0px; top: 20px; position: absolute">
+             <textbox style="width: 674.89px; height: 93.05px; left: 0px; top: 0px; position: absolute; padding-left:40px ; background: white; box-shadow: 0px 8px 16px rgba(13.04, 10.35, 43.56, 0.05);border-radius: 60px;  border: 1px #EFF0F6 solid : opacity: 0.20; color: #221F1F; font-size: 18px; font-family: Red Hat Display;font-weight: 500; line-height: 27px; word-wrap: break-word" type= "password" placeholder ="*********"/>
+            </h:div>
+        </h:div>
+        <h:button  style="width: 405px; height: 30px; padding-top: 16px; padding-bottom: 19px; padding-left: 32px; padding-right: 32px; left: 271px; top: 750px; position: absolute; background: #4477AA; box-shadow: 0px 3px 12px rgba(255, 153, 0, 0.18); border-radius: 56px; justify-content: center; align-items: center; gap: 8px; display: inline-flex" onClick='location.href="SignIn.zul"' >
+            <h:div style="text-align: center; color: white; font-size: 18px; font-family: Red Hat Display; font-weight: 600; line-height: 20px; letter-spacing: 2.70px; word-wrap: break-word"  >Registrarse</h:div>
+        </h:button>
+        <h:img style="width: 909px; height: 902px; left: 960px; top: 89px; position: absolute; border-radius: 26px; border: 7px #666666 solid; backdrop-filter: blur(4px)" src="https://via.placeholder.com/909x902" />
+        <h:div style="width: 591px; height: 111.22px; left: 184px; top: 320px; position: absolute">
+            <h:div style="width: 591px; height: 111.22px; left: 0px; top: 0px; position: absolute; text-align: center; color: #221F1F; font-size: 40px; font-family: Red Hat Display; font-weight: 700; text-transform: uppercase; word-wrap: break-word">Todos tus servicios en Un<h:br/>Solo Lugar !<h:br/><h:br/></h:div>
+        </h:div>
+        <h:div style="left: 390px; top: 900px; position: absolute; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">
+    <a style="color: #FEBA02; text-decoration: underline; cursor: pointer;"  href="OlvideContrasena.zul">¿Haz olvidado tu contraseña?</a>
+</h:div>
+    </h:div>
+</zk>
 
-    <vbox align="center" spacing="10px">
-        <button label="Login" href="Login.zul"/>
-        <button label="Sign In" href="SignIn.zul"/>
-        <button label="Olvide mi contraseña" href = "OlvideContrasena.zul" />
+
+
+
+
+
+<!--<window id="inicioWindow" title="Página de Inicio" border="normal"
+        viewModel="@id('vm') @init('viewmodel.InicioViewModel')">
+
+    <vbox width="1920px" height="1080px" align="center" spacing="10px" style="background-color: #F5F5F5;">
+
+ <image src="pexels-andrea-piacquadio-3768914.jpg" width="300px" height="300px" style="object-fit: cover; border-radius: 15px;"/>
+        <vbox align="center" spacing="10px" style="padding: 20px;">
+            <button label="Login" href="Login.zul" style="width: 200px; height: 40px; border-radius: 20px; background-color: #4477AA; color: black;"/>
+            <button label="Sign In" href="SignIn.zul" style="width: 200px; height: 40px; border-radius: 20px; background-color: #4477AA; color: black;"/>
+            <button label="Olvidé mi contraseña" href="OlvideContrasena.zul" style="width: 200px; height: 40px; border-radius: 20px; background-color: #4477AA; color: black;"/>
+        </vbox>
+
     </vbox>
 
-</window>
+</window>-->

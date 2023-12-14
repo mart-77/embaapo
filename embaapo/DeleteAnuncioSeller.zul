@@ -1,0 +1,11 @@
+<zk>
+<window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('viewmodel.DeleteAnuncioSeller')"  border="normal">
+    <vbox>
+    <label value="ID del Anuncio:" />
+        <intbox value="@bind(vm.id_servicio)" />
+
+        <button label="Eliminar" onClick="@command('eliminarAnuncioSeller')" />
+
+    </vbox>
+</window>
+</zk>
