@@ -13,12 +13,12 @@ public class SellerDAO {
 
         // Configurar la conexión a la base de datos
         String url = "jdbc:postgresql://localhost:5432/tp";
-        String usuario = "martin";
-        String contraseña = "1234";
+        String usuario = "postgres";
+        String contraseña = "0077";
 
         try (Connection connection = DriverManager.getConnection(url, usuario, contraseña);
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT nombre, cedula, oficio FROM seller")) {
+             ResultSet resultSet = statement.executeQuery("SELECT nombre, cedula, oficio FROM sellers")) {
 
             while (resultSet.next()) {
                 // Crear instancias de Servicio con datos de la base de datos

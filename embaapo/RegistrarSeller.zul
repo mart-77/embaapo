@@ -8,9 +8,9 @@
         <textbox value="@bind(vm.nombre)" />
 
         <label value="Cedula:" />
-        <textbox value="@bind(vm.cedula)" />
-        <label value="Fecha de nacimiento en formato (YYYY-DD-MM):" />
-        <textbox value="@bind(vm.nacimiento)" />
+        <intbox value="@bind(vm.cedula)" />
+        <label value="Fecha de nacimiento" />
+        <datebox value="@bind(vm.nacimiento)" />
 
         <label value="Direccion:" />
         <textbox  value="@bind(vm.direccion)" />
@@ -21,7 +21,6 @@
 
         <button label="Registrar" onClick="@command('registrar')" />
 
-        <label id="errorMessage" value="@bind(vm.errorMessage)" style="color: red;" />
 
     </vbox>
 

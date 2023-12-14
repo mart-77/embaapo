@@ -1,0 +1,10 @@
+<zk>
+    <window apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('viewmodel.CalificacionViewModel')">
+        
+            
+           
+            <combobox id="numeroSeleccionadoCombo" model="@load(vm.numeros)" selectedItem="@bind(vm.numeroSeleccionado)" />
+            
+    </window>
+</zk>
