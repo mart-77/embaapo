@@ -10,17 +10,17 @@ import java.time.Instant;
 import java.util.Scanner;
 
 public class RegistroSellerViewModel {
-    private  String nombre;
-    private  int cedula;
-    private  Date nacimiento;
-    private  String direccion;
-    private  String oficio;
-    private  Instant fecha_insersion = Instant.now();
-    private  Instant fecha_mod = Instant.now();
+    private static String nombre;
+    private static int cedula;
+    private static String nacimiento;
+    private static String direccion;
+    private static String oficio;
+    private static Instant fecha_insersion = Instant.now();
+    private static Instant fecha_mod = Instant.now();
 
 
 
-    private String errorMessage;
+    private String errorMessage ;
     private conexion connect;
 
     @Init
@@ -31,11 +31,13 @@ public class RegistroSellerViewModel {
      @NotifyChange({"errorMessage"})
     @Command
     public void registrar() {
-       if (!validarDatosUsuario(  nombre,  cedula,  nacimiento,  direccion,  oficio )) {
+        if (!validarDatosUsuario(  nombre,  cedula,  nacimiento,  direccion,  oficio )) {
+            errorMessage = "Datos invalidos";
             if (registrarSeller()) {
                 // Registro exitoso, redirigir a la página de inicio de sesión
                 Executions.sendRedirect("Menu.zul");
             } else {
+                errorMessage = "Usuario o contraseña incorrectos";
 
 
                 // Error al registrar en la base de datos, manejar según sea necesario
@@ -43,9 +45,10 @@ public class RegistroSellerViewModel {
        }
     }
 
-    public boolean validarDatosUsuario(String nombre, int cedula, Date nacimiento, String direccion, String oficio) {
+    public boolean validarDatosUsuario(String nombre, int cedula, String nacimiento, String direccion, String oficio) {
         // Verificar que todos los campos obligatorios estén presentes y no estén vacíos
         if (nombre == null || nombre.isEmpty() ||
+            nacimiento == null || nacimiento.isEmpty() ||
             direccion == null || direccion.isEmpty() ||
             oficio == null || oficio.isEmpty()) {
 
@@ -65,7 +68,7 @@ public class RegistroSellerViewModel {
         return true;
     }
     
-    private  boolean registrarSeller() {
+    private static boolean registrarSeller() {
        
         System.out.println("Datos ingresados:");
         System.out.println("Nombre: " + nombre);
@@ -83,7 +86,7 @@ public class RegistroSellerViewModel {
             try (PreparedStatement preparedStatement = connection.prepareStatement(consulta)) {
                 preparedStatement.setString(1, nombre);
                 preparedStatement.setInt(2, cedula);
-                preparedStatement.setDate(3, nacimiento);
+                preparedStatement.setString(3, nacimiento);
                 preparedStatement.setString(4, direccion);
                 preparedStatement.setString(5, oficio);
                 preparedStatement.setObject(6, timestampInsersion);
@@ -100,7 +103,6 @@ public class RegistroSellerViewModel {
             return false;
         }
     }
-    /* 
         public static void main(String[] args) {
         // Solicitar datos al usuario
         Scanner scanner = new Scanner(System.in);
@@ -123,7 +125,7 @@ public class RegistroSellerViewModel {
         } else {
             System.out.println("No se creo en la base de datos.Por favor, inténtalo de nuevo.");
         }
-    }/* */
+    }
     public int getCedula() {
         return cedula;
     }
@@ -131,11 +133,11 @@ public class RegistroSellerViewModel {
     public void setCedula(int cedula) {
         this.cedula = cedula;
     }
-    public Date getNacimiento() {
+    public String getNacimiento() {
         return nacimiento;
     }
 
-    public void setNacimiento(Date nacimiento) {
+    public void setNacimiento(String nacimiento) {
         this.nacimiento = nacimiento;
     }
   public String getNombre() {

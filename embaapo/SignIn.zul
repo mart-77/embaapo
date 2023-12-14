@@ -1,7 +1,7 @@
 <zk>
 
 <window id="registroWindow" title="Registro de Usuario" apply="org.zkoss.bind.BindComposer" border="normal"
-    viewModel="@id('vm') @init('viewmodel.RegistroViewModel')">
+    viewModel="@id('vm') @init('viewmodel.RegistroViewModel')" >
 
     <vbox align="center" spacing="10px">
         <label value="Nombre:" />
@@ -14,16 +14,14 @@
         <textbox value="@bind(vm.email)" />
 
         <label value="Teléfono:" />
-        <intbox   value="@bind(vm.telefono)" />
+        <intbox value="@bind(vm.telefono)" />
 
         <label value="Contraseña:" />
         <textbox type="password" value="@bind(vm.password)" />
 
         <button label="Registrar" onClick="@command('registrar')" />
-
-         <label  value="@bind(vm.errorMessage)" style="color: red;" />
-
         
+        <label  value="@bind(vm.errorMessage)" style="color: red;" /> 
 
     </vbox>
 
