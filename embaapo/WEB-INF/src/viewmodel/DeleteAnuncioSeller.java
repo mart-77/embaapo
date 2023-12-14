@@ -70,7 +70,7 @@ public class DeleteAnuncioSeller {
     }
 
     private Connection obtenerConexion() throws SQLException {
-        return DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
+        return DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin", "1234");
     }
 
     public int getId_servicio() {

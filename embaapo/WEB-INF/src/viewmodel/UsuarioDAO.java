@@ -14,8 +14,8 @@ public class UsuarioDAO {
 
         // Configurar la conexión a la base de datos
         String url = "jdbc:postgresql://localhost:5432/tp";
-        String usuario = "postgres";
-        String contraseña = "0077";
+        String usuario = "martin";
+        String contraseña = "1234";
 
         try (Connection connection = DriverManager.getConnection(url, usuario, contraseña);
                 Statement statement = connection.createStatement();

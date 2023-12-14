@@ -107,8 +107,8 @@ public class ActualizarCalificacionViewModel {
 
     private Connection obtenerConexion() throws SQLException {
         String url = "jdbc:postgresql://localhost:5432/tp";
-        String usuario = "postgres";
-        String contraseña = "0077";
+        String usuario = "martin";
+        String contraseña = "1234";
         return DriverManager.getConnection(url, usuario, contraseña);
     }
 

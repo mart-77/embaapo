@@ -66,8 +66,8 @@ public class MonedasViewModel {
         // Establecer la conexión a la base de datos (reemplaza con tus propias
         // credenciales y URL)
         String url = "jdbc:postgresql://localhost:5432/tp";
-        String usuario = "postgres";
-        String contraseña = "0077";
+        String usuario = "martin";
+        String contraseña = "1234";
 
         try (Connection connection = DriverManager.getConnection(url, usuario, contraseña)) {
             // Preparar la consulta SQL para insertar en la tabla divisas
@@ -104,8 +104,8 @@ public class MonedasViewModel {
         // Establecer la conexión a la base de datos (reemplaza con tus propias
         // credenciales y URL)
         String url = "jdbc:postgresql://localhost:5432/tp";
-        String usuario = "postgres";
-        String contraseña = "0077";
+        String usuario = "martin";
+        String contraseña = "1234";
 
         try (Connection connection = DriverManager.getConnection(url, usuario, contraseña)) {
             // Preparar la consulta SQL para insertar en la tabla divisas
@@ -159,8 +159,8 @@ public class MonedasViewModel {
         // Establecer la conexión a la base de datos (reemplaza con tus propias
         // credenciales y URL)
         String url = "jdbc:postgresql://localhost:5432/tp";
-        String usuario = "postgres";
-        String contraseña = "0077";
+        String usuario = "martin";
+        String contraseña = "1234";
 
         try (Connection connection = DriverManager.getConnection(url, usuario, contraseña)) {
             // Preparar la consulta SQL para insertar en la tabla divisas

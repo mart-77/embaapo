@@ -1,5 +1,6 @@
 package viewmodel;
 
+import java.security.Timestamp;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -135,7 +136,7 @@ public class conexion {
 
     public List<String> obtenerEstados() {
         List<String> listaEstados = new ArrayList<>();
-
+        
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin",
                 "1234")) {
             String sql = "SELECT descripcion FROM estado";
@@ -258,8 +259,8 @@ public class conexion {
         } catch (SQLException e) {
             e.printStackTrace();
             // Manejo de excepciones según sea necesario
-            return false;
         }
+        return false;
     }
 
     public boolean actualizarAnuncioCliente( String titulo, String descripcion, String direccion, int id_anuncio_cliente) {
@@ -468,14 +469,17 @@ public class conexion {
 
         return listaServicios;
     }
+
     public List<Map<String, Object>> obtenerAnunciosUsuarios() {
         List<Map<String, Object>> listaAnunciosUsuarios = new ArrayList<>();
 
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin", "1234")) {
-            
-            String sql = "SELECT ac.titulo AS titulo, ac.descripcion AS descripcion, ac.direccion AS direccion , ac.id_usuario AS id_usuario, u.nombre AS nombre " +
-             "FROM anuncio_cliente ac " +
-             "JOIN usuario u ON ac.id_usuario = u.id_usuario";
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin",
+                "1234")) {
+
+            String sql = "SELECT ac.titulo AS titulo, ac.descripcion AS descripcion, ac.direccion AS direccion , ac.id_usuario AS id_usuario, u.nombre AS nombre, ac.id_anuncio_cliente AS id_anuncio_cliente, e.descripcion AS descripcion_estado " +
+                    "FROM anuncio_cliente ac " +
+                    "JOIN usuario u ON ac.id_usuario = u.id_usuario " + 
+                    "JOIN estado e ON ac.id_estado = e.id_estado";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -486,8 +490,10 @@ public class conexion {
                         anuncio.put("direccion", resultSet.getString("direccion"));
                         anuncio.put("id_usuario", resultSet.getInt("id_usuario"));
                         anuncio.put("nombre", resultSet.getString("nombre"));
+                        anuncio.put("id_anuncio_cliente", resultSet.getInt("id_anuncio_cliente"));
+                        anuncio.put("descripcion_estado", resultSet.getString("descripcion_estado"));
                         listaAnunciosUsuarios.add(anuncio);
-
+                        System.out.println(" preparedStatement  :" + preparedStatement);
                     }
                 }
             }
@@ -496,6 +502,7 @@ public class conexion {
         }
         return listaAnunciosUsuarios;
     }
+
     public List<Map<String, Object>> buscarAnuncios(String terminoBusqueda) {
         List<Map<String, Object>> listaAnunciosUsuarios = new ArrayList<>();
 

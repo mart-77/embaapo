@@ -23,4 +23,7 @@
                 </template>
     </grid>
 
+    <button label="Mis anuncios" href="GestionAnuncioCliente.zul" />
+
+
 </window>

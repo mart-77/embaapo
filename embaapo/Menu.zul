@@ -5,6 +5,7 @@
     <vbox align="center" spacing="10px">
         <button label="Log Out" href="Inicio.zul"/>
         <button label="Calificar" href = "Calificacion.zul" />
+        <button label="Publicar Solicitud" href="AnuncioClienteList.zul"/>
         <button label="Quiero ser seller" href = "RegistrarSeller.zul" />
         <button label="Generar Informe Excel" onClick="@command('generarInformeExcel')" />
          <button label="Generar Informe PDF" onClick="@command('generarInformePDF')" />

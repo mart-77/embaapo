@@ -75,7 +75,7 @@ public class RegistroSellerViewModel {
          System.out.println("oficio: " + oficio);
           System.out.println("fecha_insersion: " + fecha_insersion);
         try {
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin", "1234");
                 Timestamp timestampInsersion = Timestamp.from(fecha_insersion);
             Timestamp timestampMod = Timestamp.from(fecha_mod);
             // Consulta para insertar el nuevo usuario

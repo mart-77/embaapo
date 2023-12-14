@@ -50,7 +50,7 @@ private conexion connect;
         try {
             System.out.println("Email: " + email);
             System.out.println("Password: " + nuevaContrasena);
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin", "1234");
             // Consulta para actualizar la contraseña
             String consulta = "UPDATE usuario SET password = ? WHERE email = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(consulta)) {

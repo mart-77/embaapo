@@ -63,8 +63,7 @@ public class CalificacionViewModel {
 
   
 
-    public List<String> obtenerNombresSellers() {
-        List<String> nombres = new ArrayList<>();
+    
 
 
     public void guardarNumeroSeleccionado() {

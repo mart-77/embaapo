@@ -46,7 +46,7 @@ public class ActualizarAnuncioSeller {
         System.out.println("Fecha de Insersión: " + fecha_mod);
     
         try {
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin", "1234");
             Timestamp timestampMod = Timestamp.from(fecha_mod);
     
             // Convertir java.util.Date a java.sql.Date

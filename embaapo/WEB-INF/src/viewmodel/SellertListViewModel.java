@@ -54,7 +54,7 @@ public class SellertListViewModel {
         System.out.println("Fecha de Insersión: " + fecha_insersion);
     
         try {
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres", "0077");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin", "1234");
             Timestamp timestampInsersion = Timestamp.from(fecha_insersion);
             Timestamp timestampMod = Timestamp.from(fecha_mod);
     

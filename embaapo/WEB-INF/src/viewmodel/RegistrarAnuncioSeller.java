@@ -74,8 +74,8 @@ public class RegistrarAnuncioSeller {
         System.out.println("tarifa: " + tarifa);
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "postgres",
-                    "0077");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tp", "martin",
+                    "1234");
             Timestamp timestampInsersion = Timestamp.from(fecha_insersion);
             Timestamp timestampMod = Timestamp.from(fecha_mod);
             // Consulta para insertar el nuevo usuario
